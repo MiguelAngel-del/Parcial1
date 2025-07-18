@@ -1,3 +1,33 @@
+# Clients Microservice
+
+Este es el servicio de gestión de inventario para e-commerce, desarrollado en NestJs con NodeJS. Proporciona endpoints REST.
+
+---
+
+## Autores
+
+**Miguel García** – backend developer
+**Javier García** – backend developer
+**Samuel Quijivix** – backend developer
+
+---
+
+## Tecnologías usadas
+
+- NestJs
+- MySQL
+
+---
+
+## Configuración
+
+### Prerrequisitos
+- @nestjs/typeorm@11.0.0
+- mysql2@3.14.2
+- typeorm@0.3.25
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
