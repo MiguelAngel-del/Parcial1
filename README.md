@@ -1,4 +1,4 @@
-# Clients Microservice
+# Gestión inventarios e-commerce
 
 Este es el servicio de gestión de inventario para e-commerce, desarrollado en NestJs con NodeJS. Proporciona endpoints REST.
 
