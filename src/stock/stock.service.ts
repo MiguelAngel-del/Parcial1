@@ -1,19 +1,19 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Stock } from './entities/stock.entity';
 import { CreateStockDto } from './dto/create-stock.dto';
 import { UpdateStockDto } from './dto/update-stock.dto';
+import { Lote } from '../lotes/entities/lote.entity';
 
 @Injectable()
 export class StockService {
   constructor(
     @InjectRepository(Stock)
     private readonly repo: Repository<Stock>,
+    //inyecto el repositorio de lote para validar si esta activo
+    @InjectRepository(Lote)
+    private readonly loteRepo: Repository<Lote>,
   ) {}
 
   async getAll(page: number, limit: number) {
@@ -36,7 +36,12 @@ export class StockService {
   }
 
   async getOne(id: number) {
-    const stock = await this.repo.findOneBy({ idStock: id });
+    //incluimos 'relations: ['lote']' 
+    //para traer los datos del lote para mas adelante
+    const stock = await this.repo.findOne({
+      where: { idStock: id },
+      relations: ['lote'],
+    });
     if (!stock || !stock.estado) {
       throw new NotFoundException(`Stock ${id} no disponible o está desactivado`);
     }
@@ -44,27 +49,49 @@ export class StockService {
   }
 
   async create(dto: CreateStockDto) {
-    const stock = this.repo.create(dto);
+    //valida que el lote exista y este activo antes de crear el stock
+    const lote = await this.loteRepo.findOneBy({ idLote: dto.idLote });
+    if (!lote || !lote.estado) {
+      throw new NotFoundException(`El lote ${dto.idLote} no existe o está desactivado`);
+    }
+
+    // asociamos el lote directamente como relación
+    const stock = this.repo.create({
+      ...dto,
+      lote,
+    });
     return this.repo.save(stock);
   }
 
   async update(id: number, dto: UpdateStockDto) {
-    const stock = await this.repo.findOneBy({ idStock: id });
+    // obtenemos el stock con la relacion lote para posibles validaciones
+    const stock = await this.repo.findOne({
+      where: { idStock: id },
+      relations: ['lote'],
+    });
+
     if (!stock || !stock.estado) {
       throw new NotFoundException(`No se puede actualizar el stock ${id} porque está desactivado o no existe`);
     }
 
+    //validamos lote solo si el DTO incluye un nuevo idLote
+    if (dto.idLote) {
+      const lote = await this.loteRepo.findOneBy({ idLote: dto.idLote });
+      if (!lote || !lote.estado) {
+        throw new NotFoundException(`El lote ${dto.idLote} no existe o está desactivado`);
+      }
+      stock.lote = lote;
+    }
+    //actualiza campos con Object.assign
     Object.assign(stock, dto);
     return this.repo.save(stock);
   }
 
   async delete(id: number) {
-    const stock = await this.repo.findOneBy({ idStock: id });
-    if (!stock || !stock.estado) {
+    const result = await this.repo.update(id, { estado: false });
+    if (result.affected === 0) {
       throw new NotFoundException(`El stock ${id} ya está inactivo o no existe`);
     }
-
-    stock.estado = false;
-    return this.repo.save(stock);
+    return { message: 'Stock desactivado correctamente' };
   }
 }
