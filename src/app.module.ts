@@ -14,6 +14,8 @@ import { ComprasModule } from './compras/compras.module';
 import { VentasModule } from './ventas/ventas.module';
 import { RolesModule } from './roles/roles.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { LotesModule } from './lotes/lotes.module';
+import { StockModule } from './stock/stock.module';
 import { DepartamentosModule } from './departamentos/departamentos.module';
 import { MunicipiosModule } from './municipios/municipios.module';
 
@@ -52,6 +54,8 @@ import { MunicipiosModule } from './municipios/municipios.module';
     RolesModule,
     DepartamentosModule,
     MunicipiosModule,
+    LotesModule,
+    StockModule,
   ],
   controllers: [AppController],
   providers: [AppService],

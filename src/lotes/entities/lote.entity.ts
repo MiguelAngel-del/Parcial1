@@ -1,20 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Producto } from '../../productos/entities/producto.entity';
+import { Stock } from '../../stock/entities/stock.entity';
 
-@Entity({ name: 'categorias' })
-export class Categoria {
+@Entity({ name: 'lotes' })
+export class Lote {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-  idCategoria: number;
+  idLote: number;
 
-  @Column({ length: 100 })
+  @Column({ type: 'date' })
   @ApiProperty()
-  nombreCategoria: string;
+  fechaVencimiento: Date;
 
-  @Column('text', { nullable: true })
+  @Column({ length: 50 })
   @ApiProperty()
-  descripcionCategoria: string;
+  numeroLote: string;
 
   @Column({ default: true })
   @ApiProperty()
@@ -28,6 +28,6 @@ export class Categoria {
   @ApiProperty()
   updatedAt: Date;
 
-  @OneToMany(() => Producto, (producto) => producto.categoria)
-  productos: Producto[];
+  @OneToMany(() => Stock, stock => stock.lote)
+  stocks: Stock[];
 }
