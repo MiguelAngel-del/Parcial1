@@ -14,6 +14,8 @@ import { ComprasModule } from './compras/compras.module';
 import { VentasModule } from './ventas/ventas.module';
 import { RolesModule } from './roles/roles.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { LotesModule } from './lotes/lotes.module';
+import { StockModule } from './stock/stock.module';
 
 @Module({
   imports: [
@@ -48,6 +50,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     ComprasModule,
     VentasModule,
     RolesModule,
+    LotesModule,
+    StockModule,
   ],
   controllers: [AppController],
   providers: [AppService],
