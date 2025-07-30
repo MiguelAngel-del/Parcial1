@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'roles' })
 export class Role {
@@ -11,7 +12,7 @@ export class Role {
   @ApiProperty()
   nombreRol: string;
 
-  @Column({ type: 'tinyint', default: 1 })
+  @Column({ nullable: true, type: 'tinyint', default: 1 })
   estado: number;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
@@ -21,4 +22,7 @@ export class Role {
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   @ApiProperty()
   updatedAt: Date;
+
+  @OneToMany(() => Usuario, (usuario) => usuario.rol)
+  usuarios: Usuario[];
 }

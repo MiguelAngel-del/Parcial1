@@ -1,34 +1,92 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
 import { ComprasService } from './compras.service';
 import { CreateCompraDto } from './dto/create-compra.dto';
 import { UpdateCompraDto } from './dto/update-compra.dto';
+import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 
 @Controller('compras')
 export class ComprasController {
   constructor(private readonly comprasService: ComprasService) {}
 
-  @Post()
-  create(@Body() createCompraDto: CreateCompraDto) {
-    return this.comprasService.create(createCompraDto);
-  }
-
   @Get()
-  findAll() {
-    return this.comprasService.findAll();
+  @ApiOperation({
+    summary: 'Para listar todas las compras con paginación',
+    description: 'Este endpoint sirve para obtener todas las compras registradas',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    example: 1,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    example: 10,
+  })
+  getAllCompras(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+  ) {
+    return this.comprasService.getAllCompras(page, limit);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.comprasService.findOne(+id);
+  @Get(':idCompra')
+  @ApiOperation({
+    summary: 'Obtener una compra en específico',
+    description: 'Este endpoint sirve para obtener una compra por su id',
+  })
+  @ApiParam({
+    name: 'idCompra',
+    type: Number,
+    description: 'Id de la compra a obtener',
+    example: 1,
+  })
+  getCompra(@Param('idCompra', ParseIntPipe) idCompra: number) {
+    return this.comprasService.getCompra(idCompra);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCompraDto: UpdateCompraDto) {
-    return this.comprasService.update(+id, updateCompraDto);
+  @Post()
+  @ApiOperation({
+    summary: 'Crear una nueva compra',
+    description: 'Este endpoint sirve para crear una nueva compra',
+  })
+  @ApiBody({ type: CreateCompraDto })
+  createCompra(@Body() newCompra: CreateCompraDto) {
+    return this.comprasService.createCompra(newCompra);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.comprasService.remove(+id);
+  @Patch(':idCompra')
+  @ApiOperation({
+    summary: 'Actualizar una compra existente',
+    description: 'Este endpoint sirve para actualizar una compra',
+  })
+  @ApiParam({
+    name: 'idCompra',
+    type: Number,
+    description: 'Id de la compra a actualizar',
+    example: 1,
+  })
+  updateCompra(
+    @Param('idCompra', ParseIntPipe) idCompra: number,
+    @Body() updateCompraDto: UpdateCompraDto,
+  ) {
+    return this.comprasService.updateCompra(idCompra, updateCompraDto);
+  }
+
+  @Delete(':idCompra')
+  @ApiOperation({
+    summary: 'Eliminar una compra',
+    description: 'Este endpoint elimina una compra',
+  })
+  @ApiParam({
+    name: 'idCompra',
+    type: Number,
+    description: 'Id de la compra a eliminar',
+    example: 1,
+  })
+  deleteCompra(@Param('idCompra', ParseIntPipe) idCompra: number) {
+    return this.comprasService.deleteCompra(idCompra);
   }
 }
