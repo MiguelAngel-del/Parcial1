@@ -16,6 +16,8 @@ import { RolesModule } from './roles/roles.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { LotesModule } from './lotes/lotes.module';
 import { StockModule } from './stock/stock.module';
+import { DepartamentosModule } from './departamentos/departamentos.module';
+import { MunicipiosModule } from './municipios/municipios.module';
 
 @Module({
   imports: [
@@ -50,6 +52,8 @@ import { StockModule } from './stock/stock.module';
     ComprasModule,
     VentasModule,
     RolesModule,
+    DepartamentosModule,
+    MunicipiosModule,
     LotesModule,
     StockModule,
   ],
