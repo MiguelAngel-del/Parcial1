@@ -18,6 +18,8 @@ import { LotesModule } from './lotes/lotes.module';
 import { StockModule } from './stock/stock.module';
 import { DepartamentosModule } from './departamentos/departamentos.module';
 import { MunicipiosModule } from './municipios/municipios.module';
+import { MetodosPagoModule } from './metodos-pago/metodos-pago.module';
+import { DetalleVentaModule } from './detalle-venta/detalle-venta.module';
 
 @Module({
   imports: [
@@ -56,6 +58,8 @@ import { MunicipiosModule } from './municipios/municipios.module';
     MunicipiosModule,
     LotesModule,
     StockModule,
+    MetodosPagoModule,
+    DetalleVentaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
