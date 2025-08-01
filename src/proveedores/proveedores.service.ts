@@ -2,14 +2,14 @@ import { Injectable, NotFoundException} from '@nestjs/common';
 import { CreateProveedoreDto } from './dto/create-proveedore.dto';
 import { UpdateProveedoreDto } from './dto/update-proveedore.dto';
 import { Repository } from 'typeorm';
-import { Proveedore } from './entities/proveedore.entity';
+import { Proveedor } from './entities/proveedore.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ProveedoresService {
   constructor(
-    @InjectRepository(Proveedore)
-    private proveedoresRepository: Repository<Proveedore>,
+    @InjectRepository(Proveedor)
+    private proveedoresRepository: Repository<Proveedor>,
   ) {}
 
 
@@ -29,7 +29,7 @@ export class ProveedoresService {
     };
   }
 
-  async getProveedor(idProveedor: number) {
+  async getProveedorById(idProveedor: number) {
     const proveedor = await this.proveedoresRepository.findOne({
       where: { idProveedor },
       relations: ['municipio'],
@@ -53,7 +53,7 @@ export class ProveedoresService {
     if (result.affected === 0) {
       throw new NotFoundException(`Proveedor con ID ${idProveedor} no encontrado`);
     }
-    return this.getProveedor(idProveedor);
+    return this.getProveedorById(idProveedor);
   }
 
   async deleteProveedor(idProveedor: number) {

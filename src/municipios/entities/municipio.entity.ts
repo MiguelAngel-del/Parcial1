@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn} from 'typeorm';
 import { Departamento } from '../../departamentos/entities/departamento.entity';
-import { Proveedore } from '../../proveedores/entities/proveedore.entity';
+import { Proveedor } from '../../proveedores/entities/proveedore.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'municipios' })
@@ -33,6 +33,6 @@ export class Municipio {
     @ApiProperty({ type: () => Departamento })
     departamento: Departamento;
 
-    @OneToMany(() => Proveedore, proveedor => proveedor.municipio)
-    proveedores: Proveedore[];
+    @OneToMany(() => Proveedor, proveedor => proveedor.municipio)
+    proveedores: Proveedor[];
 }
