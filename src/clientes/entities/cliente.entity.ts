@@ -39,4 +39,7 @@ export class Cliente {
   @ManyToOne(() => Municipios, (municipios) => municipios.clientes)
   idMunicipio: Municipios;
   */
+  @ManyToOne(() => Cliente, cliente => cliente.ventas)
+  @ApiProperty({ type: () => Cliente })
+  ventas: Cliente[];
 }

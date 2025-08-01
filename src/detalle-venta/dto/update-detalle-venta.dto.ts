@@ -13,11 +13,11 @@ export class UpdateDetalleVentaDto extends PartialType(CreateDetalleVentaDto) {
     @IsInt()
     idVenta?: number;
 
-    /*@ApiProperty({ 
+    @ApiProperty({ 
         description: 'ID del producto a actualizar', 
         example: 1, 
         required: false 
-    })*/
+    })
     @IsOptional()
     @IsInt()
     idProducto?: number;
@@ -57,6 +57,31 @@ export class UpdateDetalleVentaDto extends PartialType(CreateDetalleVentaDto) {
     @IsOptional()
     @IsNumber()
     subtotalVenta?: number;
+
+    @ApiProperty({
+        description: 'Id metodo de pago a actualizar',
+        example: 2,
+        required: false,
+    })
+    @IsNumber()
+    idMetodoPago?: number;
+
+    @ApiProperty({
+        description: 'Id del usuario que realiza la venta a actualizar',
+        example: 2,
+        required: false,
+    })
+    @IsNumber()
+    idUsuario?: number;
+
+    @ApiProperty({
+        description: 'Id del cliente al que se le realiza la venta a actualizar',
+        example: 2,
+        required: false,
+    })
+    @IsNumber()
+    idCliente?: number;
+
 
     @ApiProperty({ 
         description: 'Fecha de creación a actualizar', 

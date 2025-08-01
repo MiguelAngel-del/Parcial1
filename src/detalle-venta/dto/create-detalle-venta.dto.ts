@@ -9,9 +9,9 @@ export class CreateDetalleVentaDto {
     @IsInt()
     idVenta: number;
 
-    /*@ApiProperty({ description: 'ID del producto', example: 1 })
+    @ApiProperty({ description: 'ID del producto', example: 1 })
     @IsInt()
-    idProducto: number;*/
+    idProducto: number;
 
     @ApiProperty({ 
         description: 'Cantidad vendida', 
@@ -40,6 +40,27 @@ export class CreateDetalleVentaDto {
     })
     @IsNumber()
     subtotalVenta: number;
+
+    @ApiProperty({
+        description:'Id metodo de pago',
+        example: 1,
+    })
+    @IsInt()
+    idMetodoPago: number;
+
+    @ApiProperty({
+        description: 'Id del usuario que realiza la venta',
+        example: 1,
+    })
+    @IsInt()
+    idUsuario: number;
+
+    @ApiProperty({
+        description: 'Id del cliente al que se le realiza la venta',
+        example: 1,
+    })
+    @IsInt()
+    idCliente: number;
 
     @ApiProperty({ 
         description: 'Fecha de creación', 
