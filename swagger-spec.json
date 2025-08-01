@@ -1,0 +1,2945 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/productos": {
+      "get": {
+        "operationId": "ProductosController_getAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado de productos obtenido correctamente"
+          }
+        },
+        "summary": "Obtener todos los productos activos con paginación",
+        "tags": [
+          "productos"
+        ]
+      },
+      "post": {
+        "operationId": "ProductosController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Producto creado exitosamente"
+          },
+          "400": {
+            "description": "Datos inválidos para creación"
+          }
+        },
+        "summary": "Crear un nuevo producto",
+        "tags": [
+          "productos"
+        ]
+      }
+    },
+    "/productos/{id}": {
+      "get": {
+        "operationId": "ProductosController_getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID del producto",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Producto encontrado exitosamente"
+          },
+          "404": {
+            "description": "Producto no encontrado o desactivado"
+          }
+        },
+        "summary": "Obtener un producto por ID",
+        "tags": [
+          "productos"
+        ]
+      },
+      "patch": {
+        "operationId": "ProductosController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Producto actualizado exitosamente"
+          },
+          "400": {
+            "description": "Datos inválidos para actualización"
+          },
+          "404": {
+            "description": "Producto no encontrado para actualizar"
+          }
+        },
+        "summary": "Actualizar un producto existente",
+        "tags": [
+          "productos"
+        ]
+      }
+    },
+    "/productos/{id}/delete": {
+      "patch": {
+        "operationId": "ProductosController_desactivar",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Producto desactivado correctamente"
+          },
+          "404": {
+            "description": "Producto no encontrado o ya desactivado"
+          }
+        },
+        "summary": "Desactivar un producto (borrado lógico)",
+        "tags": [
+          "productos"
+        ]
+      }
+    },
+    "/categorias": {
+      "get": {
+        "operationId": "CategoriasController_getAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de categorías obtenida correctamente"
+          }
+        },
+        "summary": "Obtener todas las categorías activas con paginación",
+        "tags": [
+          "categorias"
+        ]
+      },
+      "post": {
+        "operationId": "CategoriasController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoriaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Categoría creada correctamente"
+          },
+          "400": {
+            "description": "Datos inválidos para creación"
+          }
+        },
+        "summary": "Crear una nueva categoría",
+        "tags": [
+          "categorias"
+        ]
+      }
+    },
+    "/categorias/{id}": {
+      "get": {
+        "operationId": "CategoriasController_getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID de la categoría",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoría encontrada exitosamente"
+          },
+          "404": {
+            "description": "Categoría no encontrada o está desactivada"
+          }
+        },
+        "summary": "Obtener una categoría por ID",
+        "tags": [
+          "categorias"
+        ]
+      },
+      "patch": {
+        "operationId": "CategoriasController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCategoriaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Categoría actualizada correctamente"
+          },
+          "400": {
+            "description": "Datos inválidos para actualización"
+          },
+          "404": {
+            "description": "Categoría no encontrada para actualizar"
+          }
+        },
+        "summary": "Actualizar una categoría existente",
+        "tags": [
+          "categorias"
+        ]
+      }
+    },
+    "/categorias/{id}/delete": {
+      "patch": {
+        "operationId": "CategoriasController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoría desactivada correctamente"
+          },
+          "404": {
+            "description": "Categoría no encontrada o ya desactivada"
+          }
+        },
+        "summary": "Desactivar una categoría (borrado lógico)",
+        "tags": [
+          "categorias"
+        ]
+      }
+    },
+    "/clientes": {
+      "get": {
+        "description": "Este endpoint sirve para obtener un cliente en específico",
+        "operationId": "ClientesController_getAllClientes",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todos los clientes con paginación",
+        "tags": [
+          "Clientes"
+        ]
+      },
+      "post": {
+        "description": "Este endpoint sirve para crear un nuevo cliente",
+        "operationId": "ClientesController_createCliente",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClienteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Para crear un nuevo cliente",
+        "tags": [
+          "Clientes"
+        ]
+      }
+    },
+    "/clientes/{idCliente}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener un cliente en específico",
+        "operationId": "ClientesController_getCliente",
+        "parameters": [
+          {
+            "name": "idCliente",
+            "required": true,
+            "in": "path",
+            "description": "ID del cliente a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener un cliente por su id",
+        "tags": [
+          "Clientes"
+        ]
+      },
+      "patch": {
+        "description": "Este endpoint sirve para poder actualizar un cliente",
+        "operationId": "ClientesController_updateCliente",
+        "parameters": [
+          {
+            "name": "idCliente",
+            "required": true,
+            "in": "path",
+            "description": "ID del cliente a actualizar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClienteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Actualizar un cliente existente",
+        "tags": [
+          "Clientes"
+        ]
+      }
+    },
+    "/clientes/{idCliente}/delete": {
+      "patch": {
+        "description": "Este endpoint permite eliminar un cliente cambiando su estado a inactivo",
+        "operationId": "ClientesController_deleteCliente",
+        "parameters": [
+          {
+            "name": "idCliente",
+            "required": true,
+            "in": "path",
+            "description": "ID del cliente a eliminar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar un cliente a elección",
+        "tags": [
+          "Clientes"
+        ]
+      }
+    },
+    "/proveedores": {
+      "get": {
+        "description": "Este endpoint lista todos los proveedores activos con paginación",
+        "operationId": "ProveedoresController_getAllProveedores",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todos los proveedores",
+        "tags": [
+          "Proveedores"
+        ]
+      },
+      "post": {
+        "description": "Este endpoint permite crear un nuevo proveedor",
+        "operationId": "ProveedoresController_createProveedor",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProveedoreDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Crear un nuevo proveedor",
+        "tags": [
+          "Proveedores"
+        ]
+      }
+    },
+    "/proveedores/{idProveedor}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener un proveedor específico por su ID",
+        "operationId": "ProveedoresController_getProveedor",
+        "parameters": [
+          {
+            "name": "idProveedor",
+            "required": true,
+            "in": "path",
+            "description": "ID del proveedor a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener un proveedor por ID",
+        "tags": [
+          "Proveedores"
+        ]
+      },
+      "patch": {
+        "description": "Este endpoint permite actualizar un proveedor existente por su ID",
+        "operationId": "ProveedoresController_updateProveedor",
+        "parameters": [
+          {
+            "name": "idProveedor",
+            "required": true,
+            "in": "path",
+            "description": "ID del proveedor a actualizar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProveedoreDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Actualizar un proveedor por ID",
+        "tags": [
+          "Proveedores"
+        ]
+      }
+    },
+    "/proveedores/{idProveedor}/delete": {
+      "patch": {
+        "description": "Este endpoint permite eliminar un proveedor estableciendo su estado a inactivo",
+        "operationId": "ProveedoresController_deleteProveedor",
+        "parameters": [
+          {
+            "name": "idProveedor",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar un proveedor por ID",
+        "tags": [
+          "Proveedores"
+        ]
+      }
+    },
+    "/usuarios": {
+      "get": {
+        "description": "Este endpoint sirve para obtener todos los usuarios registrados",
+        "operationId": "UsuariosController_getAllUsuarios",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todos los usuarios con paginación",
+        "tags": [
+          "Usuarios"
+        ]
+      },
+      "post": {
+        "description": "Este endpoint sirve para crear un nuevo usuario",
+        "operationId": "UsuariosController_createUsuario",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUsuarioDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Para crear un nuevo usuario",
+        "tags": [
+          "Usuarios"
+        ]
+      }
+    },
+    "/usuarios/{idUsuario}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener un usuario por su id",
+        "operationId": "UsuariosController_getUsuario",
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "required": true,
+            "in": "path",
+            "description": "Id del usuario a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener un usuario en específico",
+        "tags": [
+          "Usuarios"
+        ]
+      },
+      "patch": {
+        "description": "Este endpoint sirve para actualizar un usuario",
+        "operationId": "UsuariosController_updateUsuario",
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "required": true,
+            "in": "path",
+            "description": "Id del usuario a actualizar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUsuarioDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Actualizar un usuario existente",
+        "tags": [
+          "Usuarios"
+        ]
+      }
+    },
+    "/usuarios/{idUsuario}/delete": {
+      "patch": {
+        "description": "Este endpoint sirve para eliminar un usuario por su id",
+        "operationId": "UsuariosController_deleteUsuario",
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "required": true,
+            "in": "path",
+            "description": "Id del usuario a eliminar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar un usuario a elección",
+        "tags": [
+          "Usuarios"
+        ]
+      }
+    },
+    "/reglas-descuento": {
+      "get": {
+        "description": "Este endpoint lista todas las reglas de descuento activas para paginación",
+        "operationId": "ReglasDescuentoController_getAllReglasDescuento",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todas las reglas de descuento con paginación",
+        "tags": [
+          "ReglasDescuento"
+        ]
+      },
+      "post": {
+        "description": "Este endpoint permite crear una nueva regla de descuento",
+        "operationId": "ReglasDescuentoController_createReglaDescuento",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Datos necesarios para crear una nueva regla de descuento",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReglasDescuentoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Crear una nueva regla de descuento",
+        "tags": [
+          "ReglasDescuento"
+        ]
+      }
+    },
+    "/reglas-descuento/{idRegla}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener una regla de descuento específica",
+        "operationId": "ReglasDescuentoController_getReglaDescuento",
+        "parameters": [
+          {
+            "name": "idRegla",
+            "required": true,
+            "in": "path",
+            "description": "ID de la regla de descuento a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener una regla de descuento por su ID",
+        "tags": [
+          "ReglasDescuento"
+        ]
+      },
+      "patch": {
+        "description": "Este endpoint permite actualizar una regla de descuento existente",
+        "operationId": "ReglasDescuentoController_updateReglaDescuento",
+        "parameters": [
+          {
+            "name": "idRegla",
+            "required": true,
+            "in": "path",
+            "description": "ID de la regla de descuento a actualizar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReglasDescuentoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Actualizar una regla de descuento",
+        "tags": [
+          "ReglasDescuento"
+        ]
+      }
+    },
+    "/reglas-descuento/{idRegla}/delete": {
+      "patch": {
+        "description": "Este endpoint permite eliminar una regla de descuento estableciendo su estado a inactivo",
+        "operationId": "ReglasDescuentoController_deleteReglaDescuento",
+        "parameters": [
+          {
+            "name": "idRegla",
+            "required": true,
+            "in": "path",
+            "description": "ID de la regla de descuento a eliminar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar una regla de descuento",
+        "tags": [
+          "ReglasDescuento"
+        ]
+      }
+    },
+    "/compras": {
+      "get": {
+        "description": "Este endpoint sirve para obtener todas las compras registradas",
+        "operationId": "ComprasController_getAllCompras",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Para listar todas las compras con paginación",
+        "tags": [
+          "Compras"
+        ]
+      },
+      "post": {
+        "description": "Este endpoint sirve para crear una nueva compra",
+        "operationId": "ComprasController_createCompra",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompraDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Crear una nueva compra",
+        "tags": [
+          "Compras"
+        ]
+      }
+    },
+    "/compras/{idCompra}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener una compra por su id",
+        "operationId": "ComprasController_getCompra",
+        "parameters": [
+          {
+            "name": "idCompra",
+            "required": true,
+            "in": "path",
+            "description": "Id de la compra a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener una compra en específico",
+        "tags": [
+          "Compras"
+        ]
+      },
+      "patch": {
+        "description": "Este endpoint sirve para actualizar una compra",
+        "operationId": "ComprasController_updateCompra",
+        "parameters": [
+          {
+            "name": "idCompra",
+            "required": true,
+            "in": "path",
+            "description": "Id de la compra a actualizar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompraDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Actualizar una compra existente",
+        "tags": [
+          "Compras"
+        ]
+      },
+      "delete": {
+        "description": "Este endpoint elimina una compra",
+        "operationId": "ComprasController_deleteCompra",
+        "parameters": [
+          {
+            "name": "idCompra",
+            "required": true,
+            "in": "path",
+            "description": "Id de la compra a eliminar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar una compra",
+        "tags": [
+          "Compras"
+        ]
+      }
+    },
+    "/ventas": {
+      "get": {
+        "description": "Este endpoint lista todas las ventas con paginación",
+        "operationId": "VentasController_getAllVentas",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todas las ventas",
+        "tags": [
+          "Ventas"
+        ]
+      },
+      "post": {
+        "description": "Este endpoint permite crear una nueva venta",
+        "operationId": "VentasController_createVenta",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVentaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Crear una nueva venta",
+        "tags": [
+          "Ventas"
+        ]
+      }
+    },
+    "/ventas/{idVenta}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener una venta específica por su ID",
+        "operationId": "VentasController_getVenta",
+        "parameters": [
+          {
+            "name": "idVenta",
+            "required": true,
+            "in": "path",
+            "description": "ID de la venta a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener una venta por ID",
+        "tags": [
+          "Ventas"
+        ]
+      },
+      "patch": {
+        "description": "Este endpoint permite actualizar una venta existente por su ID",
+        "operationId": "VentasController_updateVenta",
+        "parameters": [
+          {
+            "name": "idVenta",
+            "required": true,
+            "in": "path",
+            "description": "ID de la venta a actualizar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVentaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Actualizar una venta por ID",
+        "tags": [
+          "Ventas"
+        ]
+      }
+    },
+    "/ventas/{idVenta}/delete": {
+      "patch": {
+        "description": "Este endpoint permite eliminar una venta estableciendo su estado a inactivo",
+        "operationId": "VentasController_deleteVenta",
+        "parameters": [
+          {
+            "name": "idVenta",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar una venta por ID",
+        "tags": [
+          "Ventas"
+        ]
+      }
+    },
+    "/roles": {
+      "get": {
+        "description": "Este endpoint lista los roles activos con soporte para paginación",
+        "operationId": "RolesController_getAllRoles",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todos los roles con paginación",
+        "tags": [
+          "Roles"
+        ]
+      },
+      "post": {
+        "description": "Este endpoint sirve para crear nuevos roles",
+        "operationId": "RolesController_createRole",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Para crear un nuevo rol",
+        "tags": [
+          "Roles"
+        ]
+      }
+    },
+    "/roles/{idRol}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener un rol en específico",
+        "operationId": "RolesController_getRole",
+        "parameters": [
+          {
+            "name": "idRol",
+            "required": true,
+            "in": "path",
+            "description": "Id del rol a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener un rol por su id",
+        "tags": [
+          "Roles"
+        ]
+      },
+      "patch": {
+        "description": "Este endpoint nos sirve para poder actualizar un rol",
+        "operationId": "RolesController_updateRole",
+        "parameters": [
+          {
+            "name": "idRol",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Actualizar un rol existente",
+        "tags": [
+          "Roles"
+        ]
+      }
+    },
+    "/roles/{idRol}/delete": {
+      "patch": {
+        "description": "Este endpoint nos sirve para desactivar un rol",
+        "operationId": "RolesController_deleteRole",
+        "parameters": [
+          {
+            "name": "idRol",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar un rol a elección",
+        "tags": [
+          "Roles"
+        ]
+      }
+    },
+    "/departamentos": {
+      "get": {
+        "description": "Este endpoint lista todos los departamentos activos con paginación",
+        "operationId": "DepartamentosController_getAllDepartamentos",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todos los departamentos",
+        "tags": [
+          "Departamentos"
+        ]
+      }
+    },
+    "/departamentos/{idDepartamento}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener un departamento específico por su ID",
+        "operationId": "DepartamentosController_getDepartamento",
+        "parameters": [
+          {
+            "name": "idDepartamento",
+            "required": true,
+            "in": "path",
+            "description": "ID del departamento a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener un departamento por ID",
+        "tags": [
+          "Departamentos"
+        ]
+      }
+    },
+    "/municipios": {
+      "get": {
+        "description": "Este endpoint lista todos los municipios activos",
+        "operationId": "MunicipiosController_getAllMunicipios",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todos los municipios",
+        "tags": [
+          "Municipios"
+        ]
+      }
+    },
+    "/municipios/{idMunicipio}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener un municipio específico por su ID",
+        "operationId": "MunicipiosController_getMunicipio",
+        "parameters": [
+          {
+            "name": "idMunicipio",
+            "required": true,
+            "in": "path",
+            "description": "ID del municipio a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener un municipio por ID",
+        "tags": [
+          "Municipios"
+        ]
+      }
+    },
+    "/lotes": {
+      "get": {
+        "operationId": "LotesController_getAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de lotes obtenida correctamente"
+          }
+        },
+        "summary": "Obtener todos los lotes activos con paginación",
+        "tags": [
+          "lotes"
+        ]
+      },
+      "post": {
+        "operationId": "LotesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLoteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Lote creado correctamente"
+          },
+          "400": {
+            "description": "Datos inválidos para creación"
+          }
+        },
+        "summary": "Crear un nuevo lote",
+        "tags": [
+          "lotes"
+        ]
+      }
+    },
+    "/lotes/{id}": {
+      "get": {
+        "operationId": "LotesController_getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID del lote",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lote encontrado exitosamente"
+          },
+          "404": {
+            "description": "Lote no encontrado o está desactivado"
+          }
+        },
+        "summary": "Obtener un lote por ID",
+        "tags": [
+          "lotes"
+        ]
+      },
+      "patch": {
+        "operationId": "LotesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLoteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lote actualizado exitosamente"
+          },
+          "400": {
+            "description": "Datos inválidos para actualización"
+          },
+          "404": {
+            "description": "Lote no encontrado para actualizar"
+          }
+        },
+        "summary": "Actualizar un lote existente",
+        "tags": [
+          "lotes"
+        ]
+      }
+    },
+    "/lotes/{id}/delete": {
+      "patch": {
+        "operationId": "LotesController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lote desactivado correctamente"
+          },
+          "400": {
+            "description": "El lote tiene stock activo y no puede desactivarse"
+          },
+          "404": {
+            "description": "Lote no encontrado o ya desactivado"
+          }
+        },
+        "summary": "Desactivar un lote (borrado lógico)",
+        "tags": [
+          "lotes"
+        ]
+      }
+    },
+    "/stock": {
+      "get": {
+        "operationId": "StockController_getAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de stock obtenida correctamente"
+          }
+        },
+        "summary": "Obtener todos los registros de stock activos con paginación",
+        "tags": [
+          "stock"
+        ]
+      },
+      "post": {
+        "operationId": "StockController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStockDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Stock creado exitosamente"
+          },
+          "400": {
+            "description": "Datos inválidos para creación"
+          }
+        },
+        "summary": "Crear un nuevo registro de stock",
+        "tags": [
+          "stock"
+        ]
+      }
+    },
+    "/stock/{id}": {
+      "get": {
+        "operationId": "StockController_getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID del registro de stock",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stock encontrado exitosamente"
+          },
+          "404": {
+            "description": "Registro no encontrado"
+          }
+        },
+        "summary": "Obtener un registro de stock por ID",
+        "tags": [
+          "stock"
+        ]
+      },
+      "patch": {
+        "operationId": "StockController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStockDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stock actualizado exitosamente"
+          },
+          "400": {
+            "description": "Datos inválidos para actualización"
+          },
+          "404": {
+            "description": "Registro no encontrado para actualizar"
+          }
+        },
+        "summary": "Actualizar un registro de stock existente",
+        "tags": [
+          "stock"
+        ]
+      }
+    },
+    "/stock/{id}/delete": {
+      "patch": {
+        "operationId": "StockController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stock desactivado correctamente"
+          },
+          "404": {
+            "description": "Registro no encontrado o ya desactivado"
+          }
+        },
+        "summary": "Desactivar un registro de stock (borrado lógico)",
+        "tags": [
+          "stock"
+        ]
+      }
+    },
+    "/metodos-pago": {
+      "get": {
+        "description": "Este endpoint lista todos los métodos de pago activos con paginación",
+        "operationId": "MetodosPagoController_getAllMetodosPago",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todos los métodos de pago",
+        "tags": [
+          "MetodosPago"
+        ]
+      },
+      "post": {
+        "description": "Este endpoint permite crear un nuevo método de pago",
+        "operationId": "MetodosPagoController_createMetodoPago",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMetodosPagoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Crear un nuevo método de pago",
+        "tags": [
+          "MetodosPago"
+        ]
+      }
+    },
+    "/metodos-pago/{idMetodoPago}": {
+      "get": {
+        "description": "Este endpoint sirve para obtener un método de pago específico por su ID",
+        "operationId": "MetodosPagoController_getMetodoPago",
+        "parameters": [
+          {
+            "name": "idMetodoPago",
+            "required": true,
+            "in": "path",
+            "description": "ID del método de pago a obtener",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener un método de pago por ID",
+        "tags": [
+          "MetodosPago"
+        ]
+      },
+      "patch": {
+        "description": "Este endpoint permite actualizar un método de pago existente por su ID",
+        "operationId": "MetodosPagoController_updateMetodoPago",
+        "parameters": [
+          {
+            "name": "idMetodoPago",
+            "required": true,
+            "in": "path",
+            "description": "ID del método de pago a actualizar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMetodosPagoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Actualizar un método de pago por ID",
+        "tags": [
+          "MetodosPago"
+        ]
+      }
+    },
+    "/metodos-pago/{idMetodoPago}/delete": {
+      "patch": {
+        "description": "Este endpoint permite eliminar un método de pago estableciendo su estado a inactivo",
+        "operationId": "MetodosPagoController_deleteMetodoPago",
+        "parameters": [
+          {
+            "name": "idMetodoPago",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar un método de pago por ID",
+        "tags": [
+          "MetodosPago"
+        ]
+      }
+    },
+    "/detalle-venta": {
+      "get": {
+        "description": "Lista todos los detalles de venta con paginación",
+        "operationId": "DetalleVentaController_getAllDetalleVenta",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener todos los detalles de venta",
+        "tags": [
+          "DetalleVenta"
+        ]
+      },
+      "post": {
+        "description": "Crea un nuevo detalle de venta",
+        "operationId": "DetalleVentaController_createDetalleVenta",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDetalleVentaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Crear un nuevo detalle de venta",
+        "tags": [
+          "DetalleVenta"
+        ]
+      }
+    },
+    "/detalle-venta/{idDetalleVenta}": {
+      "get": {
+        "description": "Obtiene un detalle de venta específico por su ID",
+        "operationId": "DetalleVentaController_getDetalleVenta",
+        "parameters": [
+          {
+            "name": "idDetalleVenta",
+            "required": true,
+            "in": "path",
+            "description": "ID del detalle de venta",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtener detalle de venta por ID",
+        "tags": [
+          "DetalleVenta"
+        ]
+      },
+      "patch": {
+        "description": "Actualiza un detalle de venta existente por su ID",
+        "operationId": "DetalleVentaController_updateDetalleVenta",
+        "parameters": [
+          {
+            "name": "idDetalleVenta",
+            "required": true,
+            "in": "path",
+            "description": "ID del detalle de venta a actualizar",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDetalleVentaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Actualizar un detalle de venta por ID",
+        "tags": [
+          "DetalleVenta"
+        ]
+      }
+    },
+    "/detalle-venta/{idDetalleVenta}/delete": {
+      "patch": {
+        "description": "Elimina un detalle de venta estableciendo su estado a inactivo",
+        "operationId": "DetalleVentaController_deleteDetalleVenta",
+        "parameters": [
+          {
+            "name": "idDetalleVenta",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar un detalle de venta por ID",
+        "tags": [
+          "DetalleVenta"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "Autentica al usuario y devuelve tokens JWT y refresh token",
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Iniciar sesión",
+        "tags": [
+          "Autenticación"
+        ]
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "description": "Genera nuevos tokens de acceso usando un refresh token válido",
+        "operationId": "AuthController_refresh",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Refrescar tokens",
+        "tags": [
+          "Autenticación"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Control de Endpoints",
+    "description": "Documentación de la API",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "JWT-auth": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "CreateProductoDto": {
+        "type": "object",
+        "properties": {
+          "nombreProducto": {
+            "type": "string",
+            "description": "Nombre del producto",
+            "example": "iPhone 13 Pro"
+          },
+          "descripcionProducto": {
+            "type": "string",
+            "description": "Descripción del producto",
+            "example": "Smartphone Apple 128 GB, color grafito, con pantalla OLED de 6.1″"
+          },
+          "precioVenta": {
+            "type": "number",
+            "description": "Precio de venta",
+            "example": 999.99
+          },
+          "precioCompra": {
+            "type": "number",
+            "description": "Precio de compra",
+            "example": 850
+          },
+          "modeloProducto": {
+            "type": "string",
+            "description": "Modelo del producto",
+            "example": "A2633"
+          },
+          "cantidadMinima": {
+            "type": "number",
+            "description": "Cantidad mínima en inventario",
+            "example": 5
+          },
+          "codigoProducto": {
+            "type": "string",
+            "description": "Código interno o de barras",
+            "example": "IP13PRO128"
+          },
+          "imagenProducto": {
+            "type": "string",
+            "description": "URL de la imagen del producto",
+            "example": "https://mi-tienda.com/images/iphone13pro.png"
+          },
+          "unidadMedida": {
+            "type": "string",
+            "description": "Unidad de medida",
+            "example": "unidad"
+          },
+          "categoriaId": {
+            "type": "number",
+            "description": "ID de la categoría a la que pertenece el producto",
+            "example": 1
+          }
+        },
+        "required": [
+          "nombreProducto",
+          "precioVenta",
+          "precioCompra",
+          "categoriaId"
+        ]
+      },
+      "UpdateProductoDto": {
+        "type": "object",
+        "properties": {
+          "nombreProducto": {
+            "type": "string",
+            "description": "Nombre del producto a actualizar",
+            "example": "iPhone 13 Pro Editado"
+          },
+          "descripcionProducto": {
+            "type": "string",
+            "description": "Descripción del producto actualizado",
+            "example": "Smartphone Apple 256 GB, color azul sierra, pantalla OLED de 6.1″"
+          },
+          "precioVenta": {
+            "type": "number",
+            "description": "Precio de venta actualizado",
+            "example": 1099.99
+          },
+          "precioCompra": {
+            "type": "number",
+            "description": "Precio de compra actualizado",
+            "example": 900
+          },
+          "modeloProducto": {
+            "type": "string",
+            "description": "Modelo del producto actualizado",
+            "example": "A2633"
+          },
+          "cantidadMinima": {
+            "type": "number",
+            "description": "Cantidad mínima en inventario actualizada",
+            "example": 3
+          },
+          "codigoProducto": {
+            "type": "string",
+            "description": "Código interno o de barras actualizado",
+            "example": "IP13PRO256"
+          },
+          "imagenProducto": {
+            "type": "string",
+            "description": "URL de la imagen del producto actualizada",
+            "example": "https://mi-tienda.com/images/iphone13pro-edited.png"
+          },
+          "unidadMedida": {
+            "type": "string",
+            "description": "Unidad de medida actualizada",
+            "example": "unidad"
+          },
+          "categoriaId": {
+            "type": "number",
+            "description": "ID de la categoría del producto",
+            "example": 1
+          },
+          "estado": {
+            "type": "boolean",
+            "description": "Estado del producto (true = activo, false = inactivo)",
+            "example": true
+          }
+        }
+      },
+      "CreateCategoriaDto": {
+        "type": "object",
+        "properties": {
+          "nombreCategoria": {
+            "type": "string",
+            "description": "Nombre de la categoría",
+            "example": "Celulares"
+          },
+          "descripcionCategoria": {
+            "type": "string",
+            "description": "Descripción de la categoría",
+            "example": "celulares de gama alta"
+          }
+        },
+        "required": [
+          "nombreCategoria"
+        ]
+      },
+      "UpdateCategoriaDto": {
+        "type": "object",
+        "properties": {
+          "nombreCategoria": {
+            "type": "string",
+            "description": "Nombre de la categoría a actualizar",
+            "example": "Celulares Editado"
+          },
+          "descripcionCategoria": {
+            "type": "string",
+            "description": "Descripción de la categoría",
+            "example": "celulares actuzalizados de gama alta"
+          }
+        }
+      },
+      "CreateClienteDto": {
+        "type": "object",
+        "properties": {
+          "nombreCliente": {
+            "type": "string",
+            "description": "Nombre del cliente",
+            "example": "Juan Pérez"
+          },
+          "telefonoCliente": {
+            "type": "string",
+            "description": "Teléfono del cliente",
+            "example": "1234567890"
+          },
+          "correoCliente": {
+            "type": "string",
+            "description": "Correo electrónico del cliente",
+            "example": "example@gmail.com"
+          },
+          "nitCliente": {
+            "type": "string",
+            "description": "NIT del cliente",
+            "example": "12345678"
+          },
+          "idMunicipio": {
+            "type": "number",
+            "description": "Se ingresa el id del municipio al que pertenece el cliente",
+            "example": 1
+          }
+        },
+        "required": [
+          "nombreCliente"
+        ]
+      },
+      "UpdateClienteDto": {
+        "type": "object",
+        "properties": {
+          "nombreCliente": {
+            "type": "string",
+            "description": "Nombre del cliente",
+            "example": "Juan Pérez"
+          },
+          "telefonoCliente": {
+            "type": "string",
+            "description": "Teléfono del cliente",
+            "example": "1234567890"
+          },
+          "correoCliente": {
+            "type": "string",
+            "description": "Correo electrónico del cliente",
+            "example": "exampleUpdated@gmail.com"
+          },
+          "nitCliente": {
+            "type": "string",
+            "description": "NIT del cliente",
+            "example": "1234567890"
+          }
+        }
+      },
+      "CreateProveedoreDto": {
+        "type": "object",
+        "properties": {
+          "nombreProveedor": {
+            "type": "string",
+            "description": "Nombre del proveedor",
+            "example": "Proveedor Ejemplo"
+          },
+          "telefonoProveedor": {
+            "type": "string",
+            "description": "Teléfono del proveedor",
+            "example": "123456789"
+          },
+          "direccionProveedor": {
+            "type": "string",
+            "description": "Dirección del proveedor",
+            "example": "Calle Falsa 123"
+          },
+          "idMunicipio": {
+            "type": "number",
+            "description": "ID del municipio asociado al proveedor",
+            "example": 1
+          }
+        },
+        "required": [
+          "nombreProveedor",
+          "telefonoProveedor",
+          "direccionProveedor"
+        ]
+      },
+      "UpdateProveedoreDto": {
+        "type": "object",
+        "properties": {
+          "nombreProveedor": {
+            "type": "string",
+            "description": "Nombre del proveedor a actualizar",
+            "example": "Proveedor Ejemplo Actualizado"
+          },
+          "telefonoProveedor": {
+            "type": "string",
+            "description": "Teléfono del proveedor a actualizar",
+            "example": "987654321"
+          },
+          "direccionProveedor": {
+            "type": "string",
+            "description": "Dirección del proveedor a actualizar",
+            "example": "Avenida Siempre Viva 456"
+          },
+          "idMunicipio": {
+            "type": "number",
+            "description": "ID del municipio asociado al proveedor a actualizar",
+            "example": 2
+          }
+        }
+      },
+      "CreateUsuarioDto": {
+        "type": "object",
+        "properties": {
+          "nombreUsuario": {
+            "type": "string",
+            "description": "Nombre del usuario",
+            "example": "Juan Pérez"
+          },
+          "correoUsuario": {
+            "type": "string",
+            "description": "Correo electrónico del usuario",
+            "example": "exampleUsuario@gmail.com"
+          },
+          "contrasenaHash": {
+            "type": "string",
+            "description": "Contraseña del usuario",
+            "example": "passwd123"
+          },
+          "idRol": {
+            "type": "number",
+            "description": "Id del rol del usuario",
+            "example": 1
+          }
+        },
+        "required": [
+          "nombreUsuario",
+          "correoUsuario",
+          "contrasenaHash",
+          "idRol"
+        ]
+      },
+      "UpdateUsuarioDto": {
+        "type": "object",
+        "properties": {
+          "nombreUsuario": {
+            "type": "string",
+            "description": "Nombre del usuario",
+            "example": "Usuario Actualizado"
+          },
+          "correoUsuario": {
+            "type": "string",
+            "description": "Correo electrónico del usuario",
+            "example": "updatedUsuario@gmail.com"
+          },
+          "contrasenaHash": {
+            "type": "string",
+            "description": "Contraseña del usuario",
+            "example": "passwdUpdated123"
+          },
+          "idRol": {
+            "type": "number",
+            "description": "Id del rol del usuario",
+            "example": 1
+          }
+        }
+      },
+      "CreateReglasDescuentoDto": {
+        "type": "object",
+        "properties": {
+          "porcentajeDescuento": {
+            "type": "number",
+            "description": "Porcentaje de descuento que se aplicará",
+            "example": 15
+          }
+        },
+        "required": [
+          "porcentajeDescuento"
+        ]
+      },
+      "UpdateReglasDescuentoDto": {
+        "type": "object",
+        "properties": {
+          "porcentajeDescuento": {
+            "type": "number",
+            "description": "Porcentaje de descuento aplicado",
+            "example": 25
+          }
+        }
+      },
+      "CreateCompraDto": {
+        "type": "object",
+        "properties": {
+          "totalCompra": {
+            "type": "number",
+            "description": "Total de la compra",
+            "example": 1500.5
+          },
+          "idProveedor": {
+            "type": "number",
+            "description": "Id del proveedor",
+            "example": 2
+          },
+          "idUsuario": {
+            "type": "number",
+            "description": "Id del usuario",
+            "example": 5
+          }
+        },
+        "required": [
+          "totalCompra",
+          "idProveedor",
+          "idUsuario"
+        ]
+      },
+      "UpdateCompraDto": {
+        "type": "object",
+        "properties": {
+          "totalCompra": {
+            "type": "number",
+            "description": "Total de la compra",
+            "example": 1500.5
+          },
+          "estadoCompra": {
+            "type": "number",
+            "description": "Id del estado de la compra",
+            "example": 1
+          },
+          "idProveedor": {
+            "type": "number",
+            "description": "Id del proveedor",
+            "example": 1
+          },
+          "idUsuario": {
+            "type": "number",
+            "description": "Id del usuario que realizó la compra",
+            "example": 1
+          }
+        }
+      },
+      "CreateVentaDto": {
+        "type": "object",
+        "properties": {
+          "fechaVenta": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Fecha de la venta",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "idCliente": {
+            "type": "number",
+            "description": "ID del cliente asociado a la venta",
+            "example": 1
+          },
+          "idUsuario": {
+            "type": "number",
+            "description": "ID del usuario que realiza la venta",
+            "example": 1
+          },
+          "idMetodoPago": {
+            "type": "number",
+            "description": "ID del método de pago utilizado en la venta",
+            "example": 1
+          },
+          "totalVenta": {
+            "type": "number",
+            "description": "Total de la venta",
+            "example": 100.5
+          },
+          "subtotalVenta": {
+            "type": "number",
+            "description": "Subtotal de la venta",
+            "example": 90
+          },
+          "descuentoVenta": {
+            "type": "number",
+            "description": "Descuento aplicado a la venta",
+            "example": 10.5
+          },
+          "estado": {
+            "type": "number",
+            "description": "Estado de la venta",
+            "example": 1
+          },
+          "estadoVenta": {
+            "type": "boolean",
+            "description": "Estado lógico de la venta",
+            "example": true
+          }
+        },
+        "required": [
+          "fechaVenta",
+          "idCliente",
+          "idUsuario",
+          "idMetodoPago",
+          "totalVenta",
+          "subtotalVenta",
+          "descuentoVenta"
+        ]
+      },
+      "UpdateVentaDto": {
+        "type": "object",
+        "properties": {
+          "fechaVenta": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Fecha de la venta a actualizar",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "idCliente": {
+            "type": "number",
+            "description": "ID del cliente asociado a la venta a actualizar",
+            "example": 1
+          },
+          "idUsuario": {
+            "type": "number",
+            "description": "ID del usuario que realiza la venta a actualizar",
+            "example": 1
+          },
+          "idMetodoPago": {
+            "type": "number",
+            "description": "ID del método de pago utilizado en la venta a actualizar",
+            "example": 1
+          },
+          "totalVenta": {
+            "type": "number",
+            "description": "Total de la venta a actualizar",
+            "example": 100.5
+          },
+          "subtotalVenta": {
+            "type": "number",
+            "description": "Subtotal de la venta a actualizar",
+            "example": 90
+          },
+          "descuentoVenta": {
+            "type": "number",
+            "description": "Descuento aplicado a la venta a actualizar",
+            "example": 10.5
+          },
+          "estado": {
+            "type": "number",
+            "description": "Estado de la venta a actualizar",
+            "example": 1
+          },
+          "estadoVenta": {
+            "type": "boolean",
+            "description": "Estado lógico de la venta a actualizar",
+            "example": true
+          }
+        }
+      },
+      "CreateRoleDto": {
+        "type": "object",
+        "properties": {
+          "nombreRol": {
+            "type": "string",
+            "description": "Nombre del rol",
+            "example": "Administrador"
+          }
+        },
+        "required": [
+          "nombreRol"
+        ]
+      },
+      "UpdateRoleDto": {
+        "type": "object",
+        "properties": {
+          "nombreRol": {
+            "type": "string",
+            "description": "Nombre del rol a actualizar",
+            "example": "Administrador corregido"
+          },
+          "estado": {
+            "type": "number",
+            "description": "Estado del rol (1 = activo, 0 = inactivo)",
+            "example": 1
+          }
+        }
+      },
+      "CreateLoteDto": {
+        "type": "object",
+        "properties": {
+          "fechaVencimiento": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Fecha de vencimiento del lote",
+            "example": "2024-12-31"
+          },
+          "numeroLote": {
+            "type": "string",
+            "description": "Número único del lote",
+            "example": "LOTE-2023-001"
+          }
+        },
+        "required": [
+          "fechaVencimiento",
+          "numeroLote"
+        ]
+      },
+      "UpdateLoteDto": {
+        "type": "object",
+        "properties": {
+          "fechaVencimiento": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Fecha de vencimiento actualizada",
+            "example": "2025-01-15"
+          },
+          "numeroLote": {
+            "type": "string",
+            "description": "Número de lote actualizado",
+            "example": "LOTE-2023-001-REV"
+          }
+        }
+      },
+      "CreateStockDto": {
+        "type": "object",
+        "properties": {
+          "idProducto": {
+            "type": "number",
+            "description": "id del producto relacionado (ej. iPhone 13 Pro)",
+            "example": 1
+          },
+          "idLote": {
+            "type": "number",
+            "description": "id del lote relacionado (ej. lote de julio 2025)",
+            "example": 3
+          },
+          "cantidadStock": {
+            "type": "number",
+            "description": "Cantidad de stock disponible para este producto en el lote",
+            "example": 25
+          }
+        },
+        "required": [
+          "idProducto",
+          "idLote",
+          "cantidadStock"
+        ]
+      },
+      "UpdateStockDto": {
+        "type": "object",
+        "properties": {
+          "idProducto": {
+            "type": "number",
+            "description": "ID del producto relacionado",
+            "example": 1
+          },
+          "idLote": {
+            "type": "number",
+            "description": "ID del lote relacionado",
+            "example": 1
+          },
+          "cantidadStock": {
+            "type": "number",
+            "description": "Nueva cantidad de stock",
+            "example": 50
+          },
+          "estado": {
+            "type": "boolean",
+            "description": "Estado del registro de stock",
+            "example": true
+          }
+        }
+      },
+      "CreateMetodosPagoDto": {
+        "type": "object",
+        "properties": {
+          "nombreMetodoPago": {
+            "type": "string",
+            "description": "Nombre del método de pago",
+            "example": "Tarjeta de crédito"
+          },
+          "descripcionMetodoPago": {
+            "type": "string",
+            "description": "Descripción del método de pago",
+            "example": "Pago con tarjeta de crédito o débito"
+          }
+        },
+        "required": [
+          "nombreMetodoPago"
+        ]
+      },
+      "UpdateMetodosPagoDto": {
+        "type": "object",
+        "properties": {
+          "nombreMetodoPago": {
+            "type": "string",
+            "description": "Nombre del método de pago a actualizar",
+            "example": "Tarjeta de débito"
+          },
+          "descripcionMetodoPago": {
+            "type": "string",
+            "description": "Descripción del método de pago a actualizar",
+            "example": "Pago con tarjeta de débito"
+          }
+        }
+      },
+      "CreateDetalleVentaDto": {
+        "type": "object",
+        "properties": {
+          "idVenta": {
+            "type": "number",
+            "description": "ID de la venta",
+            "example": 1
+          },
+          "cantidadVenta": {
+            "type": "number",
+            "description": "Cantidad vendida",
+            "example": 2
+          },
+          "precioUnitarioVenta": {
+            "type": "number",
+            "description": "Precio unitario",
+            "example": 50
+          },
+          "descuentoAplicado": {
+            "type": "number",
+            "description": "Descuento aplicado",
+            "example": 5
+          },
+          "subtotalVenta": {
+            "type": "number",
+            "description": "Subtotal",
+            "example": 95
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Fecha de creación",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Fecha de actualización",
+            "example": "2023-10-01T12:00:00Z"
+          }
+        },
+        "required": [
+          "idVenta",
+          "cantidadVenta",
+          "precioUnitarioVenta",
+          "descuentoAplicado",
+          "subtotalVenta"
+        ]
+      },
+      "UpdateDetalleVentaDto": {
+        "type": "object",
+        "properties": {
+          "idVenta": {
+            "type": "number",
+            "description": "ID de la venta a actualizar",
+            "example": 1
+          },
+          "cantidadVenta": {
+            "type": "number",
+            "description": "Cantidad vendida a actualizar",
+            "example": 3
+          },
+          "precioUnitarioVenta": {
+            "type": "number",
+            "description": "Precio unitario a actualizar",
+            "example": 60
+          },
+          "descuentoAplicado": {
+            "type": "number",
+            "description": "Descuento aplicado a actualizar",
+            "example": 2
+          },
+          "subtotalVenta": {
+            "type": "number",
+            "description": "Subtotal a actualizar",
+            "example": 180
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Fecha de creación a actualizar",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Fecha de actualización a actualizar",
+            "example": "2023-10-01T12:00:00Z"
+          }
+        }
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "identificador": {
+            "type": "string",
+            "example": "juan123 o juan@ejemplo.com"
+          },
+          "contrasena": {
+            "type": "string",
+            "example": "password123"
+          }
+        },
+        "required": [
+          "identificador",
+          "contrasena"
+        ]
+      },
+      "RefreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string",
+            "description": "Refresh token para obtener nuevo access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        },
+        "required": [
+          "refresh_token"
+        ]
+      }
+    }
+  }
+}
