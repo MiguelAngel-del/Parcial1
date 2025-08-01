@@ -9,7 +9,7 @@ export class Usuario {
   @ApiProperty()
   idUsuario: number;
 
-  @Column({ nullable: false })
+  @Column({ unique: true, nullable: false })
   @ApiProperty()
   nombreUsuario: string;
 

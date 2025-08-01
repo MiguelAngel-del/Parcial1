@@ -2,9 +2,13 @@ import { Controller, ParseIntPipe, DefaultValuePipe, Query, Get, Post, Body, Pat
 import { DetalleVentaService } from './detalle-venta.service';
 import { CreateDetalleVentaDto } from './dto/create-detalle-venta.dto';
 import { UpdateDetalleVentaDto } from './dto/update-detalle-venta.dto';
-import { ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
 import { DetalleVenta } from './entities/detalle-venta.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
+@ApiBearerAuth('JWT-auth')
+@UseGuards(JwtAuthGuard)
 @Controller('detalle-venta')
 export class DetalleVentaController {
   constructor(private readonly detalleVentaService: DetalleVentaService) {}
