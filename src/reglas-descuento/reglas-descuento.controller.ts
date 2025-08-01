@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { UseGuards, Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ReglasDescuentoService } from './reglas-descuento.service';
 import { CreateReglasDescuentoDto } from './dto/create-reglas-descuento.dto';
 import { UpdateReglasDescuentoDto } from './dto/update-reglas-descuento.dto';
-import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
+@ApiBearerAuth('JWT-auth')
+@UseGuards(JwtAuthGuard)
 @Controller('reglas-descuento')
 export class ReglasDescuentoController {
   constructor(private readonly reglasDescuentoService: ReglasDescuentoService) {}

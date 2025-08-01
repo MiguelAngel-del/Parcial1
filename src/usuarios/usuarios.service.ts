@@ -16,7 +16,7 @@ export class UsuariosService {
   async getAllUsuarios(page: number, limit: number) {
     const queryBuilder = this.usuariosRepository
       .createQueryBuilder('usuario')
-      .where('usuario.estado = :estado', { estado: true }); // Solo usuarios activos
+      .where('usuario.estado = :estado', { estado: true });
 
     const total = await queryBuilder.getCount();
     const usuarios = await queryBuilder
@@ -24,13 +24,11 @@ export class UsuariosService {
       .take(limit)
       .getMany();
 
-    const totalPages = Math.ceil(total / limit);
-
     return {
       data: usuarios,
       total,
       currentPage: page,
-      totalPages,
+      totalPages: Math.ceil(total / limit),
     };
   }
 
@@ -62,7 +60,7 @@ export class UsuariosService {
       dto.contrasenaHash = await bcrypt.hash(dto.contrasenaHash, salt);
     }
 
-    let updateData: any = { ...dto };
+    const updateData: any = { ...dto };
     if (dto.idRol !== undefined) {
       updateData.rol = { idRol: dto.idRol };
       delete updateData.idRol;
@@ -81,5 +79,26 @@ export class UsuariosService {
       throw new NotFoundException(`Usuario con ID ${idUsuario} no encontrado`);
     }
     return { message: `Usuario con ID ${idUsuario} eliminado correctamente` };
+  }
+
+  async findByEmail(correoUsuario: string): Promise<Usuario | undefined> {
+    return this.usuariosRepository.findOne({ 
+      where: { correoUsuario },
+      relations: ['rol'],
+    });
+  }
+
+  async findByUsername(nombreUsuario: string): Promise<Usuario | undefined> {
+    return this.usuariosRepository.findOne({ 
+      where: { nombreUsuario },
+      relations: ['rol'],
+    });
+  }
+
+  async findOne(idUsuario: number): Promise<Usuario | undefined> {
+    return this.usuariosRepository.findOne({ 
+      where: { idUsuario },
+      relations: ['rol'],
+    });
   }
 }

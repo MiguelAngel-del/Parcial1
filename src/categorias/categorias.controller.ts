@@ -1,11 +1,14 @@
-import { Controller, Get, Post, Patch, Param, Body, ParseIntPipe, Query, DefaultValuePipe } from '@nestjs/common';
-import {ApiTags, ApiOperation, ApiParam, ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { UseGuards, Controller, Get, Post, Patch, Param, Body, ParseIntPipe, Query, DefaultValuePipe } from '@nestjs/common';
+import {  ApiBearerAuth, ApiTags, ApiOperation, ApiParam, ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { CategoriasService } from './categorias.service';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { Categoria } from './entities/categoria.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('categorias')
+@ApiBearerAuth('JWT-auth') 
+@UseGuards(JwtAuthGuard)
 @Controller('categorias')
 export class CategoriasController {
   constructor(private readonly svc: CategoriasService) {}

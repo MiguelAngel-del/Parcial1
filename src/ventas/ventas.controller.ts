@@ -1,10 +1,13 @@
-import { Controller, ParseIntPipe, DefaultValuePipe, Query, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import { UseGuards, Controller, ParseIntPipe, DefaultValuePipe, Query, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { VentasService } from './ventas.service';
 import { CreateVentaDto } from './dto/create-venta.dto';
 import { UpdateVentaDto } from './dto/update-venta.dto';
-import { ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
 import { Venta } from './entities/venta.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
+@ApiBearerAuth('JWT-auth')
+@UseGuards(JwtAuthGuard)
 @Controller('ventas')
 export class VentasController {
   constructor(private readonly ventasService: VentasService) {}

@@ -1,10 +1,13 @@
-import { Controller, ParseIntPipe, DefaultValuePipe, Query, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import { UseGuards, Controller, ParseIntPipe, DefaultValuePipe, Query, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { MetodosPagoService } from './metodos-pago.service';
 import { CreateMetodosPagoDto } from './dto/create-metodos-pago.dto';
 import { UpdateMetodosPagoDto } from './dto/update-metodos-pago.dto';
-import { ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
 import { MetodoPago } from './entities/metodos-pago.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
+@ApiBearerAuth('JWT-auth')
+@UseGuards(JwtAuthGuard)
 @Controller('metodos-pago')
 export class MetodosPagoController {
   constructor(private readonly metodosPagoService: MetodosPagoService) {}

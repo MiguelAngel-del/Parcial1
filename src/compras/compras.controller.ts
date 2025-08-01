@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
+import { UseGuards, Controller, Get, Post, Body, Patch, Param, Delete, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
 import { ComprasService } from './compras.service';
 import { CreateCompraDto } from './dto/create-compra.dto';
 import { UpdateCompraDto } from './dto/update-compra.dto';
-import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
+@ApiBearerAuth('JWT-auth')
+@UseGuards(JwtAuthGuard)
 @Controller('compras')
 export class ComprasController {
   constructor(private readonly comprasService: ComprasService) {}
