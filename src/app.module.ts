@@ -20,6 +20,7 @@ import { DepartamentosModule } from './departamentos/departamentos.module';
 import { MunicipiosModule } from './municipios/municipios.module';
 import { MetodosPagoModule } from './metodos-pago/metodos-pago.module';
 import { DetalleVentaModule } from './detalle-venta/detalle-venta.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { DetalleVentaModule } from './detalle-venta/detalle-venta.module';
     StockModule,
     MetodosPagoModule,
     DetalleVentaModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

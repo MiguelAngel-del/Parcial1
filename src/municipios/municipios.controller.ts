@@ -1,10 +1,13 @@
-import { Controller, Get, Query, Param, DefaultValuePipe, ParseIntPipe,  } from '@nestjs/common';
+import { UseGuards, Controller, Get, Query, Param, DefaultValuePipe, ParseIntPipe,  } from '@nestjs/common';
 import { MunicipiosService } from './municipios.service';
 import { CreateMunicipioDto } from './dto/create-municipio.dto';
 import { UpdateMunicipioDto } from './dto/update-municipio.dto';
-import { ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { Municipio } from './entities/municipio.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
+@ApiBearerAuth('JWT-auth')
+@UseGuards(JwtAuthGuard)
 @Controller('municipios')
 export class MunicipiosController {
   constructor(private readonly municipiosService: MunicipiosService) {}

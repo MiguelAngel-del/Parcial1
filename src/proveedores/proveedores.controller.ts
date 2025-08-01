@@ -1,10 +1,13 @@
-import { Controller, ParseIntPipe ,DefaultValuePipe, Query, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { UseGuards, Controller, ParseIntPipe ,DefaultValuePipe, Query, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ProveedoresService } from './proveedores.service';
 import { CreateProveedoreDto } from './dto/create-proveedore.dto';
 import { UpdateProveedoreDto } from './dto/update-proveedore.dto';
-import { ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth,ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
 import { Proveedore } from './entities/proveedore.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
+@ApiBearerAuth('JWT-auth')
+@UseGuards(JwtAuthGuard)
 @Controller('proveedores')
 export class ProveedoresController {
   constructor(private readonly proveedoresService: ProveedoresService) {}
