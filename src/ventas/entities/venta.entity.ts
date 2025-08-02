@@ -38,7 +38,7 @@ export class Venta {
     @ApiProperty()
     updatedAt: Date;
 
-   /* @ManyToOne(() => Cliente, cliente => cliente.ventas)
+   @ManyToOne(() => Cliente, cliente => cliente.ventas)
     @JoinColumn({ name: 'clienteIdCliente' })
     @ApiProperty({ type: () => Cliente })
     cliente: Cliente;
@@ -47,7 +47,7 @@ export class Venta {
     @JoinColumn({ name: 'usuarioIdUsuario' })
     @ApiProperty({ type: () => Usuario })
     usuario: Usuario;
-    */
+    
     @ManyToOne(() => MetodoPago, metodoPago => metodoPago.ventas)
     @JoinColumn({ name: 'metodoPagoIdMetodoPago' })
     @ApiProperty({ type: () => MetodoPago })

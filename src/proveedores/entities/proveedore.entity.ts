@@ -4,7 +4,7 @@ import { Municipio } from '../../municipios/entities/municipio.entity';
 import { Compra } from 'src/compras/entities/compra.entity';
 
 @Entity({ name: 'proveedores'})
-export class Proveedore {
+export class Proveedor {
     @PrimaryGeneratedColumn()
     @ApiProperty()
     idProveedor: number;

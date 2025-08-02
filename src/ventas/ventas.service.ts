@@ -17,8 +17,8 @@ export class VentasService {
       take: limit,
       relations: [
         'metodoPago',
-        // 'cliente',
-        // 'usuario',
+        'cliente',
+        'usuario',
       ],
     });
     return {
@@ -34,8 +34,8 @@ export class VentasService {
       where: { idVenta },
       relations: [
         'metodoPago',
-        // 'cliente',
-        // 'usuario',
+        'cliente',
+        'usuario',
       ],
     });
     if (!venta) {
@@ -47,8 +47,8 @@ export class VentasService {
   async createVenta(dto: CreateVentaDto) {
     const newVenta = this.ventaRepository.create({
       ...dto,
-      // cliente: { idCliente: dto.idCliente },
-      // usuario: { idUsuario: dto.idUsuario },
+      cliente: { idCliente: dto.idCliente },
+      usuario: { idUsuario: dto.idUsuario },
       metodoPago: { idMetodoPago: dto.idMetodoPago },
     });
     return await this.ventaRepository.save(newVenta);

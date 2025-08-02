@@ -16,8 +16,7 @@ export class DetalleVentaService {
     const [data, total] = await this.detalleVentaRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
-      relations: ['venta'],
-      // relations: ['venta', 'producto'],
+      relations: ['venta', 'producto'],
     });
     const totalPages = Math.ceil(total / limit);
     return { 
@@ -31,8 +30,7 @@ export class DetalleVentaService {
   async getDetalleVenta(idDetalleVenta: number) {
     const detalle = await this.detalleVentaRepository.findOne({
       where: { idDetalleVenta },
-      relations: ['venta'],
-      // relations: ['venta', 'producto'],
+      relations: ['venta', 'producto'],
     });
     if (!detalle) {
       throw new NotFoundException(`Detalle de venta con ID ${idDetalleVenta} no encontrado`);
@@ -44,7 +42,7 @@ export class DetalleVentaService {
     const newDetalle = this.detalleVentaRepository.create({
       ...dto,
       venta: { idVenta: dto.idVenta },
-      // producto: { idProducto: dto.idProducto },
+      producto: { idProducto: dto.idProducto },
     });
     return await this.detalleVentaRepository.save(newDetalle);
   }

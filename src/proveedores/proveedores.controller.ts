@@ -3,7 +3,7 @@ import { ProveedoresService } from './proveedores.service';
 import { CreateProveedoreDto } from './dto/create-proveedore.dto';
 import { UpdateProveedoreDto } from './dto/update-proveedore.dto';
 import { ApiBearerAuth,ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
-import { Proveedore } from './entities/proveedore.entity';
+import { Proveedor } from './entities/proveedore.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiBearerAuth('JWT-auth')
@@ -53,8 +53,8 @@ export class ProveedoresController {
     description: 'ID del proveedor a obtener',
     example: 1
   })
-  getProveedor(@Param('idProveedor') idProveedor: number): Promise<Proveedore> {
-    return this.proveedoresService.getProveedor(idProveedor);
+  getProveedorById(@Param('idProveedor') idProveedor: number): Promise<Proveedor> {
+    return this.proveedoresService.getProveedorById(idProveedor);
   }
 
   @Post()
@@ -63,8 +63,8 @@ export class ProveedoresController {
     description: 'Este endpoint permite crear un nuevo proveedor'
   })
   @ApiBody({ type: CreateProveedoreDto })
-  createProveedor(@Body() newProveedore: CreateProveedoreDto): Promise<Proveedore> {
-    return this.proveedoresService.createProveedor(newProveedore);
+  createProveedor(@Body() newProveedor: CreateProveedoreDto): Promise<Proveedor> {
+    return this.proveedoresService.createProveedor(newProveedor);
   }
 
   @Patch(':idProveedor')
