@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Proveedore } from "src/proveedores/entities/proveedore.entity";
+import { Proveedor } from "src/proveedores/entities/proveedore.entity";
 import { Usuario } from "src/usuarios/entities/usuario.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -33,7 +33,7 @@ export class Compra {
     @ApiProperty()
     updatedAt: Date;
 
-    @ManyToOne(() => Proveedore, (idProveedor) => idProveedor.compra)
+    @ManyToOne(() => Proveedor, (idProveedor) => idProveedor.compra)
     @ApiProperty({ type: () => Compra })
     idProveedor: Compra;
 
