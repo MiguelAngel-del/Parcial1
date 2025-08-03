@@ -29,7 +29,7 @@ export class Municipio {
     updatedAt: Date;
 
     @ManyToOne(() => Departamento, departamento => departamento.municipios)
-    @JoinColumn({ name: 'departamentoIdDepartamento' })
+    @JoinColumn({ name: 'idDepartamento' })
     @ApiProperty({ type: () => Departamento })
     departamento: Departamento;
 

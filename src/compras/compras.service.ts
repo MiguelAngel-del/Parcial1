@@ -49,7 +49,7 @@ export class ComprasService {
   async createCompra(dto: CreateCompraDto) {
     const nuevaCompra = this.comprasRepository.create({
       ...dto,
-      idProveedor: { idProveedor: dto.idProveedor } as any,
+      proveedor: { idProveedor: dto.idProveedor } as any,
       idUsuario: { idUsuario: dto.idUsuario } as any,
     });
     return await this.comprasRepository.save(nuevaCompra);
