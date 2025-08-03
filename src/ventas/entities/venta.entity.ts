@@ -39,17 +39,17 @@ export class Venta {
     updatedAt: Date;
 
    @ManyToOne(() => Cliente, cliente => cliente.ventas)
-    @JoinColumn({ name: 'clienteIdCliente' })
+    @JoinColumn({ name: 'idCliente' })
     @ApiProperty({ type: () => Cliente })
     cliente: Cliente;
     
     @ManyToOne(() => Usuario, usuario => usuario.ventas)
-    @JoinColumn({ name: 'usuarioIdUsuario' })
+    @JoinColumn({ name: 'idUsuario' })
     @ApiProperty({ type: () => Usuario })
     usuario: Usuario;
     
     @ManyToOne(() => MetodoPago, metodoPago => metodoPago.ventas)
-    @JoinColumn({ name: 'metodoPagoIdMetodoPago' })
+    @JoinColumn({ name: 'idMetodoPago' })
     @ApiProperty({ type: () => MetodoPago })
     metodoPago: MetodoPago;
 }
