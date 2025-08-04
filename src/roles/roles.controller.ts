@@ -18,8 +18,6 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestj
 import { Role } from './entities/role.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
-@ApiBearerAuth('JWT-auth')
-@UseGuards(JwtAuthGuard)
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
