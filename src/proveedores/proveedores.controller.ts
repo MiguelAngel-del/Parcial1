@@ -27,7 +27,7 @@ export class ProveedoresController {
     name: 'limit',
     required: false,
     type: Number,
-    example: 1
+    example: 10
   })
 
   getAllProveedores(
