@@ -42,7 +42,12 @@ export class ClientesService {
   }
 
   async createCliente(dto: CreateClienteDto) {
-    const newCliente = this.clientesRepository.create(dto);
+    const createData: any = { ...dto };
+    if (dto.idMunicipio !== undefined) {
+      createData.municipio = { idMunicipio: dto.idMunicipio };
+      delete createData.idMunicipio;
+    }
+    const newCliente = this.clientesRepository.create(createData);
     return await this.clientesRepository.save(newCliente);
   }
 
@@ -54,7 +59,10 @@ export class ClientesService {
       delete updateData.idMunicipio;
     }
 
-    const result = await this.clientesRepository.update({ idCliente }, updateData);
+    const result = await this.clientesRepository.update(
+      { idCliente },
+      updateData,
+    );
     if (result.affected === 0) {
       throw new NotFoundException(`Cliente con ID ${idCliente} no encontrado`);
     }
