@@ -1,4 +1,3 @@
-// productos.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -19,6 +18,7 @@ export class ProductosService {
   async getAll(page: number, limit: number) {
     const query = this.repo
       .createQueryBuilder('producto')
+      .leftJoinAndSelect('producto.categoria', 'categoria')
       .where('producto.estado = :estado', { estado: true });
 
     const total = await query.getCount();
