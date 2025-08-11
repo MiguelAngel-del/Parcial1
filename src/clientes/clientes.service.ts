@@ -47,7 +47,14 @@ export class ClientesService {
   }
 
   async updateCliente(idCliente: number, dto: UpdateClienteDto) {
-    const result = await this.clientesRepository.update({ idCliente }, dto);
+    const updateData: any = { ...dto };
+
+    if (dto.idMunicipio !== undefined) {
+      updateData.municipio = { idMunicipio: dto.idMunicipio };
+      delete updateData.idMunicipio;
+    }
+
+    const result = await this.clientesRepository.update({ idCliente }, updateData);
     if (result.affected === 0) {
       throw new NotFoundException(`Cliente con ID ${idCliente} no encontrado`);
     }

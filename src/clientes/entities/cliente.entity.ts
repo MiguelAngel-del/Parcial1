@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Municipio } from 'src/municipios/entities/municipio.entity';
 
 @Entity({ name: 'clientes' })
 export class Cliente {
@@ -34,12 +35,12 @@ export class Cliente {
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   @ApiProperty()
   updatedAt: Date;
-
-  /*
-  @ManyToOne(() => Municipios, (municipios) => municipios.clientes)
-  idMunicipio: Municipios;
-  */
+  
   @ManyToOne(() => Cliente, cliente => cliente.ventas)
   @ApiProperty({ type: () => Cliente })
   ventas: Cliente[];
+  
+  @ManyToOne(() => Municipio, (municipio) => municipio.clientes)
+  @ApiProperty({ type: () => Municipio })
+  municipio: Municipio;
 }
