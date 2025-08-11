@@ -7,8 +7,6 @@ import { Producto } from './entities/producto.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('productos')
-@ApiBearerAuth('JWT-auth')
-@UseGuards(JwtAuthGuard)
 @Controller('productos')
 export class ProductosController {
   constructor(private readonly svc: ProductosService) {}
@@ -35,6 +33,8 @@ export class ProductosController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
   @ApiOperation({ summary: 'Crear un nuevo producto' })
   @ApiBody({ type: CreateProductoDto })
   @ApiResponse({ status: 201, description: 'Producto creado exitosamente' })
@@ -44,6 +44,8 @@ export class ProductosController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
   @ApiOperation({ summary: 'Actualizar un producto existente' })
   @ApiParam({ name: 'id', example: 1 })
   @ApiBody({ type: UpdateProductoDto })
@@ -58,6 +60,8 @@ export class ProductosController {
   }
 
   @Patch(':id/delete')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
   @ApiOperation({ summary: 'Desactivar un producto (borrado lógico)' })
   @ApiParam({ name: 'id', example: 1 })
   @ApiResponse({ status: 200, description: 'Producto desactivado correctamente' })

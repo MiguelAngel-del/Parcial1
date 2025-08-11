@@ -48,4 +48,13 @@ export class UpdateClienteDto extends PartialType(CreateClienteDto) {
   @IsString()
   @MinLength(5)
   nitCliente?: string;
+
+  @ApiProperty({
+    description: 'ID del municipio',
+    example: 1,
+    required: false,
+  })
+  @IsOptional()
+  @IsInt()
+  idMunicipio?: number;
 }

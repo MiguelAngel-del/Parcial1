@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColum
 import { Departamento } from '../../departamentos/entities/departamento.entity';
 import { Proveedor } from '../../proveedores/entities/proveedore.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Cliente } from 'src/clientes/entities/cliente.entity';
 
 @Entity({ name: 'municipios' })
 export class Municipio {
@@ -35,4 +36,7 @@ export class Municipio {
 
     @OneToMany(() => Proveedor, proveedor => proveedor.municipio)
     proveedores: Proveedor[];
+
+    @OneToMany(() => Cliente, cliente => cliente.municipio)
+    clientes: Cliente[];
 }
