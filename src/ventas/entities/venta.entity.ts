@@ -9,10 +9,6 @@ export class Venta {
     @PrimaryGeneratedColumn()
     @ApiProperty()
     idVenta: number;
-
-    @Column({ type: Date,  default: () => 'CURRENT_TIMESTAMP' })
-    @ApiProperty()
-    fechaVenta: Date;
     
     @Column("decimal", { precision: 10, scale: 2 })
     @ApiProperty()
