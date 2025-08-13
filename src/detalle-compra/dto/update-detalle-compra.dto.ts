@@ -1,9 +1,9 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateDetalleCompraDto } from './create-detalle-compra.dto';
+import { CreateDetalleCompraSimpleDto } from './create-detalle-compra.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNumber, IsOptional, IsDateString } from 'class-validator';
 
-export class UpdateDetalleCompraDto extends PartialType(CreateDetalleCompraDto) {
+export class UpdateDetalleCompraDto extends PartialType(CreateDetalleCompraSimpleDto) {
   @ApiProperty({
     description: 'ID de la compra a actualizar',
     example: 1,
