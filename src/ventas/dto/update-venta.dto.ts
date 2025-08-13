@@ -5,14 +5,6 @@ import { Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateVentaDto extends PartialType(CreateVentaDto) {
-    @ApiProperty({
-        description: 'Fecha de la venta a actualizar',
-        example: '2023-10-01T12:00:00Z',
-        required: false,
-    })
-    @IsOptional()
-    @Transform(({ value }) => new Date(value))
-    fechaVenta?: Date;
 
     @ApiProperty({
         description: 'ID del cliente asociado a la venta a actualizar',

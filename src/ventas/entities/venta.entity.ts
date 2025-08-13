@@ -1,18 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Cliente } from 'src/clientes/entities/cliente.entity';
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { MetodoPago } from 'src/metodos-pago/entities/metodos-pago.entity';
+import { DetalleVenta } from '../../detalle-venta/entities/detalle-venta.entity';
 
 @Entity({ name: 'ventas' })
 export class Venta {
     @PrimaryGeneratedColumn()
     @ApiProperty()
     idVenta: number;
-
-    @Column({ type: Date,  default: () => 'CURRENT_TIMESTAMP' })
-    @ApiProperty()
-    fechaVenta: Date;
     
     @Column("decimal", { precision: 10, scale: 2 })
     @ApiProperty()
@@ -52,4 +49,7 @@ export class Venta {
     @JoinColumn({ name: 'idMetodoPago' })
     @ApiProperty({ type: () => MetodoPago })
     metodoPago: MetodoPago;
+    @OneToMany(() => DetalleVenta, detalle => detalle.venta, { cascade: true })
+    @ApiProperty({ type: () => [DetalleVenta] })
+    detalles: DetalleVenta[];
 }
