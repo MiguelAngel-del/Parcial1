@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Producto } from '../../productos/entities/producto.entity';
 import { Lote } from '../../lotes/entities/lote.entity';
 
@@ -14,18 +14,10 @@ export class Stock {
   @ApiProperty({ type: () => Producto })
   producto: Producto;
 
-  @Column({ name: 'idProducto' })
-  @ApiProperty()
-  idProducto: number;
-
   @ManyToOne(() => Lote, lote => lote.stocks)
   @JoinColumn({ name: 'idLote' })
   @ApiProperty({ type: () => Lote })
   lote: Lote;
-
-  @Column({ name: 'idLote' })
-  @ApiProperty()
-  idLote: number;
 
   @Column('int')
   @ApiProperty()

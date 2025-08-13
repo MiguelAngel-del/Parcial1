@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/swagger';
 import { CreateLoteDto } from './create-lote.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsDateString, IsOptional, IsString, MinLength, IsBoolean } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class UpdateLoteDto extends PartialType(CreateLoteDto) {
@@ -24,4 +24,13 @@ export class UpdateLoteDto extends PartialType(CreateLoteDto) {
   @IsString()
   @MinLength(3)
   numeroLote?: string;
+
+  @ApiProperty({
+    description: 'Estado del lote',
+    example: true,
+    required: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  estado?: boolean;
 }

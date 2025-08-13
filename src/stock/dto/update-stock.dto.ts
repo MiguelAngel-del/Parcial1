@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/swagger';
 import { CreateStockDto } from './create-stock.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsInt, IsOptional, Min } from 'class-validator';
+import { IsBoolean, IsDateString, IsInt, IsOptional, Min } from 'class-validator';
 
 export class UpdateStockDto extends PartialType(CreateStockDto) {
   @ApiProperty({
@@ -43,4 +43,22 @@ export class UpdateStockDto extends PartialType(CreateStockDto) {
   @IsInt()
   @Min(1)
   idLote?: number;
+
+  @ApiProperty({
+    description: 'Fecha de creación',
+    example: '2025-08-11T00:00:00Z',
+    required: false,
+  })
+  @IsOptional()
+  @IsDateString()
+  createdAt?: Date;
+
+  @ApiProperty({
+    description: 'Fecha de actualización',
+    example: '2025-08-11T00:00:00Z',
+    required: false,
+  })
+  @IsOptional()
+  @IsDateString()
+  updatedAt?: Date;
 }
