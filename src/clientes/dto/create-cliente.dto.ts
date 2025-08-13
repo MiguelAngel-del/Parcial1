@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { IsInt, IsString, MinLength } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsInt, IsString, MinLength, IsOptional, ValidateNested } from 'class-validator';
+import { CreateUsuarioDto } from 'src/usuarios/dto/create-usuario.dto';
 
 export class CreateClienteDto {
   @ApiProperty({
@@ -46,5 +47,15 @@ export class CreateClienteDto {
     required: false,
   })
   @IsInt()
-  idMunicipio?: number; // Opcional por el momento, 
+  idMunicipio?: number;
+
+  @ApiProperty({
+    description: 'Datos del usuario si el cliente decide crear cuenta',
+    required: false,
+    type: () => CreateUsuarioDto
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => CreateUsuarioDto)
+  usuarioOpcional?: CreateUsuarioDto;
 }

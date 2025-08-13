@@ -4,12 +4,15 @@ import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cliente } from './entities/cliente.entity';
 import { Repository } from 'typeorm';
+import { UsuariosService } from 'src/usuarios/usuarios.service';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Injectable()
 export class ClientesService {
   constructor(
     @InjectRepository(Cliente)
     private readonly clientesRepository: Repository<Cliente>,
+    private readonly usuariosService: UsuariosService,
   ) {}
 
   async getAllClientes(page: number, limit: number) {
@@ -47,6 +50,17 @@ export class ClientesService {
       createData.municipio = { idMunicipio: dto.idMunicipio };
       delete createData.idMunicipio;
     }
+
+    // Si se reciben datos de usuario, se crea y se vincula
+    if (dto.usuarioOpcional) {
+      // Se crea el  usuario y se obtiene el id
+      const usuarioCreado: Usuario = await this.usuariosService.createUsuario(
+        dto.usuarioOpcional,
+      );
+      createData.usuario = usuarioCreado;
+    }
+    delete createData.usuarioOpcional;
+
     const newCliente = this.clientesRepository.create(createData);
     return await this.clientesRepository.save(newCliente);
   }
