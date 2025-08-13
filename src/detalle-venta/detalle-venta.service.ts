@@ -7,6 +7,12 @@ import { DetalleVenta } from './entities/detalle-venta.entity';
 
 @Injectable()
 export class DetalleVentaService {
+  async getDetallesByVenta(idVenta: number) {
+    return await this.detalleVentaRepository.find({
+      where: { venta: { idVenta } },
+      relations: ['venta', 'producto'],
+    });
+  }
   constructor(
     @InjectRepository(DetalleVenta)
     private detalleVentaRepository: Repository<DetalleVenta>,
