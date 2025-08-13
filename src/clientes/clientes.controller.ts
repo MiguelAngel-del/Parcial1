@@ -68,14 +68,44 @@ export class ClientesController {
   }
 
   @Post()
-  @ApiOperation({
-    summary: 'Para crear un nuevo cliente',
-    description: 'Este endpoint sirve para crear un nuevo cliente',
-  })
-  @ApiBody({ type: CreateClienteDto })
-  createCliente(@Body() newCliente: CreateClienteDto) {
-    return this.clientesService.createCliente(newCliente);
-  }
+    @ApiOperation({
+      summary: 'Para crear un nuevo cliente',
+      description: 'Este endpoint sirve para crear un nuevo cliente. Si se incluye el campo opcional de Usuario, se crea y vincula un usuario.',
+    })
+    @ApiBody({
+      type: CreateClienteDto,
+      examples: {
+        soloCliente: {
+          summary: 'Solo cliente',
+          value: {
+            nombreCliente: 'Ignacio Sanchez',
+            telefonoCliente: '1234567890',
+            correoCliente: 'ignacio@gmail.com',
+            nitCliente: '12345678',
+            idMunicipio: 1
+          }
+        },
+        clienteConUsuario: {
+          summary: 'Cliente con usuario',
+          value: {
+            nombreCliente: 'Ana López',
+            telefonoCliente: '9876543210',
+            correoCliente: 'ana@gmail.com',
+            nitCliente: '87654321',
+            idMunicipio: 2,
+            usuarioOpcional: {
+              nombreUsuario: 'analopez',
+              correoUsuario: 'ana.lopez@correo.com',
+              contrasenaHash: 'password123',
+              idRol: 2
+            }
+          }
+        }
+      }
+    })
+    createCliente(@Body() newCliente: CreateClienteDto) {
+      return this.clientesService.createCliente(newCliente);
+    }
 
   @Patch(':idCliente')
   @ApiOperation({

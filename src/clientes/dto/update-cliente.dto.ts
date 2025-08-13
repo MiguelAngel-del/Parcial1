@@ -3,6 +3,7 @@ import { CreateClienteDto } from './create-cliente.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsOptional, IsString, Min, MinLength } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { CreateUsuarioDto } from 'src/usuarios/dto/create-usuario.dto';
 
 export class UpdateClienteDto extends PartialType(CreateClienteDto) {
   @ApiProperty({
@@ -57,4 +58,12 @@ export class UpdateClienteDto extends PartialType(CreateClienteDto) {
   @IsOptional()
   @IsInt()
   idMunicipio?: number;
+
+    @ApiProperty({
+      description: 'Datos del usuario si el cliente desea actualizar su cuenta',
+      required: false,
+      type: () => CreateUsuarioDto
+    })
+    @IsOptional()
+    usuarioOpcional?: CreateUsuarioDto;
 }
