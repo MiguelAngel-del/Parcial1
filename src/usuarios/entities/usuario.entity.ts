@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Compra } from 'src/compras/entities/compra.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import { Venta } from 'src/ventas/entities/venta.entity';
+import { Stock } from 'src/stock/entities/stock.entity';
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'usuarios' })
@@ -25,7 +26,7 @@ export class Usuario {
   @ManyToOne(() => Role, (rol) => rol.usuarios)
   rol: Role;
 
-  @OneToMany(() => Compra, (compra) => compra.idUsuario)
+  @OneToMany(() => Compra, (compra) => compra.usuario)
   compras: Compra[];
 
 
@@ -45,4 +46,9 @@ export class Usuario {
   @OneToMany(() => Venta, (venta) => venta.usuario)
   @ApiProperty({ type: () => [Venta] })
   ventas: Venta[];
+
+  async findStock(manager, producto, lote) {
+    let stock = await manager.findOne(Stock, { where: { producto: { idProducto: producto.idProducto }, lote: { idLote: lote.idLote } } });
+    return stock;
+  }
 }

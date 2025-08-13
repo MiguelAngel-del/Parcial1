@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateProductoDto } from './create-producto.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsBoolean, IsNumber, IsString, Min, MinLength, IsInt } from 'class-validator';
+import { IsOptional, IsBoolean, IsNumber, IsString, Min, MinLength, IsInt, IsDateString } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class UpdateProductoDto extends PartialType(CreateProductoDto) {
@@ -11,7 +11,7 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
     required: false,
   })
   @IsOptional()
-  @Transform(({ value }) => value.trim())
+  @Transform(({ value }) => value?.trim())
   @IsString()
   @MinLength(1)
   nombreProducto?: string;
@@ -22,14 +22,14 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
     required: false,
   })
   @IsOptional()
-  @Transform(({ value }) => value.trim())
+  @Transform(({ value }) => value?.trim())
   @IsString()
   @MinLength(1)
   descripcionProducto?: string;
 
   @ApiProperty({
     description: 'Precio de venta actualizado',
-    example: 1_099.99,
+    example: 1099.99,
     required: false,
   })
   @IsOptional()
@@ -53,7 +53,7 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
     required: false,
   })
   @IsOptional()
-  @Transform(({ value }) => value.trim())
+  @Transform(({ value }) => value?.trim())
   @IsString()
   @MinLength(1)
   modeloProducto?: string;
@@ -74,7 +74,7 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
     required: false,
   })
   @IsOptional()
-  @Transform(({ value }) => value.trim())
+  @Transform(({ value }) => value?.trim())
   @IsString()
   @MinLength(1)
   codigoProducto?: string;
@@ -85,7 +85,7 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
     required: false,
   })
   @IsOptional()
-  @Transform(({ value }) => value.trim())
+  @Transform(({ value }) => value?.trim())
   @IsString()
   @MinLength(1)
   imagenProducto?: string;
@@ -96,7 +96,7 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
     required: false,
   })
   @IsOptional()
-  @Transform(({ value }) => value.trim())
+  @Transform(({ value }) => value?.trim())
   @IsString()
   @MinLength(1)
   unidadMedida?: string;
@@ -109,7 +109,7 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
   @IsOptional()
   @IsInt()
   @Min(1)
-  categoriaId?: number;
+  idCategoria?: number;
 
   @ApiProperty({
     description: 'Estado del producto (true = activo, false = inactivo)',
@@ -119,4 +119,22 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
   @IsOptional()
   @IsBoolean()
   estado?: boolean;
+
+  @ApiProperty({
+    description: 'Fecha de creación',
+    example: '2025-08-11T00:00:00Z',
+    required: false,
+  })
+  @IsOptional()
+  @IsDateString()
+  createdAt?: Date;
+
+  @ApiProperty({
+    description: 'Fecha de actualización',
+    example: '2025-08-11T00:00:00Z',
+    required: false,
+  })
+  @IsOptional()
+  @IsDateString()
+  updatedAt?: Date;
 }
