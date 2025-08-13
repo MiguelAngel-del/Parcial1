@@ -19,6 +19,8 @@ export class StockService {
   async getAll(page: number, limit: number) {
     const query = this.repo
       .createQueryBuilder('stock')
+      .leftJoinAndSelect('stock.producto', 'producto')
+      .leftJoinAndSelect('stock.lote', 'lote')
       .where('stock.estado = :estado', { estado: true });
 
     const total = await query.getCount();

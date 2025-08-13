@@ -49,12 +49,7 @@ export class ProveedoresService {
   }
 
   async updateProveedor(idProveedor: number, dto: UpdateProveedoreDto) {
-    const updateData: any = { ...dto };
-    if (dto.idMunicipio !== undefined) {
-      updateData.municipio = { idMunicipio: dto.idMunicipio };
-      delete updateData.idMunicipio;
-    }
-    const result = await this.proveedoresRepository.update({ idProveedor }, updateData);
+    const result = await this.proveedoresRepository.update({ idProveedor }, dto);
     if (result.affected === 0) {
       throw new NotFoundException(`Proveedor con ID ${idProveedor} no encontrado`);
     }

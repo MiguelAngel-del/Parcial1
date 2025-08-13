@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { Stock } from '../../stock/entities/stock.entity';
+import { Producto } from '../../productos/entities/producto.entity';
 
 @Entity({ name: 'lotes' })
 export class Lote {
@@ -27,6 +28,11 @@ export class Lote {
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   @ApiProperty()
   updatedAt: Date;
+
+  @ManyToOne(() => Producto, producto => producto.lotes)
+  @JoinColumn({ name: 'idProducto' })
+  @ApiProperty({ type: () => Producto })
+  producto: Producto;
 
   @OneToMany(() => Stock, stock => stock.lote)
   stocks: Stock[];
