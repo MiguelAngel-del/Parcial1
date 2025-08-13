@@ -1,15 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { IsInt, IsOptional, IsNumber } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsInt, IsOptional, IsNumber, ValidateNested } from 'class-validator';
+import { CreateDetalleVentaDto } from '../../detalle-venta/dto/create-detalle-venta.dto';
 
 export class CreateVentaDto {
-    @ApiProperty({
-        description: 'Fecha de la venta',
-        example: '2023-10-01T12:00:00Z',
-    })
-    @Transform(({ value }) => new Date(value))
-    fechaVenta: Date;
-
     @ApiProperty({
         description: 'ID del cliente asociado a la venta',
         example: 1,
@@ -68,4 +62,27 @@ export class CreateVentaDto {
     })
     @IsOptional()
     estadoVenta?: boolean;
+    @ApiProperty({
+        description: 'Detalles de la venta (arreglo de productos)',
+        type: [CreateDetalleVentaDto],
+        example: [
+            {
+                idProducto: 1,
+                cantidadVenta: 2,
+                precioUnitarioVenta: 50.00,
+                descuentoAplicado: 5.00,
+                subtotalVenta: 95.00
+            },
+            {
+                idProducto: 2,
+                cantidadVenta: 1,
+                precioUnitarioVenta: 45.00,
+                descuentoAplicado: 0.00,
+                subtotalVenta: 45.00
+            }
+        ]
+    })
+    @ValidateNested({ each: true })
+    @Type(() => CreateDetalleVentaDto)
+    detalles: CreateDetalleVentaDto[];
 }

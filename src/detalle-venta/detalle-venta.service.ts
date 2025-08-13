@@ -41,7 +41,6 @@ export class DetalleVentaService {
   async createDetalleVenta(dto: CreateDetalleVentaDto) {
     const newDetalle = this.detalleVentaRepository.create({
       ...dto,
-      venta: { idVenta: dto.idVenta },
       producto: { idProducto: dto.idProducto },
     });
     return await this.detalleVentaRepository.save(newDetalle);
