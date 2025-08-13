@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DetalleCompra } from '../compras/entities/detalle-compra.entity';
 import { Stock } from '../stock/entities/stock.entity';
-import { CreateDetalleCompraDto } from './dto/create-detalle-compra.dto';
+import { CreateDetalleCompraSimpleDto } from './dto/create-detalle-compra.dto';
 import { UpdateDetalleCompraDto } from './dto/update-detalle-compra.dto';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class DetalleCompraService {
     private readonly detalleCompraRepository: Repository<DetalleCompra>,
   ) {}
 
-  async create(dto: CreateDetalleCompraDto) {
+  async create(dto: CreateDetalleCompraSimpleDto) {
     const detalle = this.detalleCompraRepository.create({
       ...dto,
       compra: { idCompra: dto.idCompra },

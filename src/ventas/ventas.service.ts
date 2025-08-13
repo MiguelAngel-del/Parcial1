@@ -71,7 +71,35 @@ export class VentasService {
       metodoPago: { idMetodoPago: dto.idMetodoPago },
       detalles: detallesProcesados,
     });
-    return await this.ventaRepository.save(newVenta);
+    const ventaGuardada = await this.ventaRepository.save(newVenta);
+
+    // Descontar stock FIFO por cada detalle vendido
+    const stockRepo = this.ventaRepository.manager.getRepository('Stock');
+    for (const det of detallesProcesados) {
+      let cantidadRestante = det.cantidadVenta;
+      // Buscar lotes activos y ordenados por fecha de vencimiento ascendente
+      const lotesStock = await stockRepo.createQueryBuilder('stock')
+        .leftJoinAndSelect('stock.lote', 'lote')
+        .where('stock.producto = :idProducto', { idProducto: det.producto.idProducto })
+        .andWhere('stock.estado = :estado', { estado: true })
+        .orderBy('lote.fechaVencimiento', 'ASC')
+        .getMany();
+      for (const stock of lotesStock) {
+        if (cantidadRestante <= 0) break;
+        if (stock.cantidadStock >= cantidadRestante) {
+          stock.cantidadStock -= cantidadRestante;
+          cantidadRestante = 0;
+        } else {
+          cantidadRestante -= stock.cantidadStock;
+          stock.cantidadStock = 0;
+        }
+        await stockRepo.save(stock);
+      }
+      if (cantidadRestante > 0) {
+        throw new NotFoundException(`No hay suficiente stock para el producto ${det.producto.nombreProducto}`);
+      }
+    }
+    return ventaGuardada;
   }
 
   async updateVenta(idVenta: number, dto: UpdateVentaDto) {
