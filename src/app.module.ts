@@ -21,6 +21,7 @@ import { MunicipiosModule } from './municipios/municipios.module';
 import { MetodosPagoModule } from './metodos-pago/metodos-pago.module';
 import { DetalleVentaModule } from './detalle-venta/detalle-venta.module';
 import { AuthModule } from './auth/auth.module';
+import { DetalleCompraModule } from './detalle-compra/detalle-compra.module';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { AuthModule } from './auth/auth.module';
     MetodosPagoModule,
     DetalleVentaModule,
     AuthModule,
+    DetalleCompraModule,
   ],
   controllers: [AppController],
   providers: [AppService],

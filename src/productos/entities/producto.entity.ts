@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { Categoria } from '../../categorias/entities/categoria.entity';
 import { Stock } from '../../stock/entities/stock.entity';
+import { DetalleCompra } from '../../compras/entities/detalle-compra.entity';
+import { Lote } from '../../lotes/entities/lote.entity';
 
 @Entity({ name: 'productos' })
 export class Producto {
@@ -64,4 +66,10 @@ export class Producto {
 
   @OneToMany(() => Stock, (stock) => stock.producto)
   stocks: Stock[];
+
+  @OneToMany(() => DetalleCompra, (detalle) => detalle.producto)
+  detallesCompra: DetalleCompra[];
+
+  @OneToMany(() => Lote, (lote) => lote.producto)
+  lotes: Lote[];
 }

@@ -6,8 +6,6 @@ import { ApiBearerAuth, ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestj
 import { MetodoPago } from './entities/metodos-pago.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
-@ApiBearerAuth('JWT-auth')
-@UseGuards(JwtAuthGuard)
 @Controller('metodos-pago')
 export class MetodosPagoController {
   constructor(private readonly metodosPagoService: MetodosPagoService) {}

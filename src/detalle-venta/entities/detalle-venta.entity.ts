@@ -9,7 +9,7 @@ export class DetalleVenta {
     @ApiProperty()
     idDetalleVenta: number;
 
-    @ManyToOne(() => Venta)
+    @ManyToOne(() => Venta, venta => venta.detalles)
     @JoinColumn({ name: 'idVenta' })
     @ApiProperty({ type: () => Venta })
     venta: Venta;
