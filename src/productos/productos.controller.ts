@@ -23,6 +23,13 @@ export class ProductosController {
     return this.svc.getAll(page, limit);
   }
 
+  @Get('alertas-stock')
+  @ApiOperation({ summary: 'Obtener productos con stock igual o menor a la cantidad mínima' })
+  @ApiResponse({ status: 200, description: 'Listado de productos en alerta de stock bajo' })
+  async getAlertasStock() {
+    return await this.svc.getProductosConStockMinimo();
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un producto por ID' })
   @ApiParam({ name: 'id', example: 1, description: 'ID del producto' })

@@ -1,7 +1,7 @@
 import { UseGuards, Controller, Get, Post, Body, Patch, Param, Delete, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
 import { DetalleCompraService } from './detalle-compra.service';
-import { CreateDetalleCompraDto } from './dto/create-detalle-compra.dto';
-import { UpdateDetalleCompraDto } from './dto/update-detalle-compra.dto';
+import { CreateDetalleCompraDto } from '../compras/dto/create-detalle-compra.dto';
+import { UpdateDetalleCompraDto } from '../compras/dto/update-detalle-compra.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 

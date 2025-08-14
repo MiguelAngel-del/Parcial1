@@ -8,6 +8,19 @@ import { Lote } from '../lotes/entities/lote.entity';
 
 @Injectable()
 export class StockService {
+  async getTotalStockProducto(idProducto: number) {
+    // Suma el stock de todos los lotes activos para el producto
+    const total = await this.repo
+      .createQueryBuilder('stock')
+      .select('SUM(stock.cantidadStock)', 'totalStock')
+      .where('stock.producto = :idProducto', { idProducto })
+      .andWhere('stock.estado = :estado', { estado: true })
+      .getRawOne();
+    return {
+      idProducto,
+      totalStock: Number(total?.totalStock || 0)
+    };
+  }
   constructor(
     @InjectRepository(Stock)
     private readonly repo: Repository<Stock>,

@@ -59,7 +59,7 @@ export class VentasController {
   @Post()
   @ApiOperation({
     summary: 'Crear una nueva venta',
-    description: 'Este endpoint permite crear una nueva venta'
+    description: 'Este endpoint permite crear una nueva venta, descuenta del stock'
   })
   @ApiBody({ type: CreateVentaDto })
   createVenta(@Body() newVenta: CreateVentaDto): Promise<Venta> {
