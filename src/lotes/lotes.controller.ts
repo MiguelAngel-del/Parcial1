@@ -12,6 +12,17 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 @Controller('lotes')
 export class LotesController {
   constructor(private readonly svc: LotesService) {}
+  
+  @Get('reporte')
+  @ApiOperation({ summary: 'Obtener reporte de lotes por rango de fechas' })
+  @ApiQuery({ name: 'fechaInicio', type: String, required: true })
+  @ApiQuery({ name: 'fechaFin', type: String, required: true })
+  getReporteLotes(
+    @Query('fechaInicio') fechaInicio: string,
+    @Query('fechaFin') fechaFin: string,
+  ) {
+    return this.svc.getLotesPorFechas(new Date(fechaInicio), new Date(fechaFin));
+  }
 
   @Get()
   @ApiOperation({ summary: 'Obtener todos los lotes activos con paginación' })
@@ -66,4 +77,5 @@ export class LotesController {
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.svc.delete(id);
   }
+
 }

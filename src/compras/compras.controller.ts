@@ -10,6 +10,20 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 @Controller('compras')
 export class ComprasController {
   constructor(private readonly comprasService: ComprasService) {}
+  
+  @Get('reporte')
+  @ApiOperation({
+    summary: 'Obtener reporte de compras por rango de fechas',
+    description: 'Este endpoint sirve para obtener un reporte de las compras realizadas en un rango de fechas',
+  })
+  @ApiQuery({ name: 'fechaInicio', type: String, required: true })
+  @ApiQuery({ name: 'fechaFin', type: String, required: true })
+  getReporteCompras(
+    @Query('fechaInicio') fechaInicio: string,
+    @Query('fechaFin') fechaFin: string,
+  ) {
+    return this.comprasService.getComprasPorFechas(new Date(fechaInicio), new Date(fechaFin));
+  }
 
   @Get()
   @ApiOperation({
@@ -107,4 +121,5 @@ export class ComprasController {
   deleteCompra(@Param('idCompra', ParseIntPipe) idCompra: number) {
     return this.comprasService.deleteCompra(idCompra);
   }
+
 }

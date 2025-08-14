@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 import { Stock } from './entities/stock.entity';
 import { CreateStockDto } from './dto/create-stock.dto';
 import { UpdateStockDto } from './dto/update-stock.dto';
@@ -108,5 +108,15 @@ export class StockService {
       throw new NotFoundException(`El stock ${id} ya está inactivo o no existe`);
     }
     return { message: 'Stock desactivado correctamente' };
+  }
+
+  async getStockPorFechas(fechaInicio: Date, fechaFin: Date) {
+    return await this.repo.find({
+      where: {
+        createdAt: Between(fechaInicio, fechaFin),
+        estado: true,
+      },
+      relations: ['producto', 'lote'],
+    });
   }
 }
