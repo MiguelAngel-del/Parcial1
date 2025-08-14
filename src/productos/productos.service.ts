@@ -5,6 +5,7 @@ import { Producto } from './entities/producto.entity';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { UpdateProductoDto } from './dto/update-producto.dto';
 import { Categoria } from '../categorias/entities/categoria.entity';
+import { StockService } from '../stock/stock.service';
 
 @Injectable()
 export class ProductosService {
@@ -13,7 +14,26 @@ export class ProductosService {
     private readonly repo: Repository<Producto>,
     @InjectRepository(Categoria)
     private readonly categoriaRepo: Repository<Categoria>,
+    private readonly stockService: StockService,
   ) {}
+  async getProductosConStockMinimo() {
+    const productos = await this.repo.find({ where: { estado: true } });
+    const alertas = [];
+    for (const producto of productos) {
+      if (producto.cantidadMinima != null) {
+        const totalStock = await this.stockService.getTotalStockProducto(producto.idProducto);
+        if (totalStock.totalStock <= producto.cantidadMinima) {
+          alertas.push({
+            idProducto: producto.idProducto,
+            nombreProducto: producto.nombreProducto,
+            stockActual: totalStock.totalStock,
+            cantidadMinima: producto.cantidadMinima
+          });
+        }
+      }
+    }
+    return alertas;
+  }
 
   async getAll(page: number, limit: number) {
     const query = this.repo
