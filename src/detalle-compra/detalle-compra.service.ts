@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DetalleCompra } from '../compras/entities/detalle-compra.entity';
 import { Stock } from '../stock/entities/stock.entity';
-import { CreateDetalleCompraSimpleDto } from './dto/create-detalle-compra.dto';
-import { UpdateDetalleCompraDto } from './dto/update-detalle-compra.dto';
+import { CreateDetalleCompraDto } from '../compras/dto/create-detalle-compra.dto';
+import { UpdateDetalleCompraDto } from '../compras/dto/update-detalle-compra.dto';
 
 @Injectable()
 export class DetalleCompraService {
@@ -13,10 +13,9 @@ export class DetalleCompraService {
     private readonly detalleCompraRepository: Repository<DetalleCompra>,
   ) {}
 
-  async create(dto: CreateDetalleCompraSimpleDto) {
+  async create(dto: CreateDetalleCompraDto) {
     const detalle = this.detalleCompraRepository.create({
       ...dto,
-      compra: { idCompra: dto.idCompra },
       producto: { idProducto: dto.idProducto },
     });
     return this.detalleCompraRepository.save(detalle);
@@ -54,24 +53,21 @@ export class DetalleCompraService {
     if (!detalle) throw new NotFoundException('Detalle de compra no encontrado o inactivo');
 
     // Si cambia la cantidad, ajustar el stock
-    if (dto.cantidadCompra !== undefined && dto.cantidadCompra !== detalle.cantidadCompra) {
+    if (dto.cantidad !== undefined && dto.cantidad !== detalle.cantidadCompra) {
       // Buscar stock correspondiente usando la relación lote
       if (!detalle.lote) throw new NotFoundException('No se encontró el lote asociado al detalle');
       const stock = await this.detalleCompraRepository.manager.findOne(Stock, {
         where: { producto: { idProducto: detalle.producto.idProducto }, lote: { idLote: detalle.lote.idLote } },
       });
       if (stock) {
-        stock.cantidadStock = stock.cantidadStock - detalle.cantidadCompra + dto.cantidadCompra;
+        stock.cantidadStock = stock.cantidadStock - detalle.cantidadCompra + dto.cantidad;
         await this.detalleCompraRepository.manager.save(Stock, stock);
       }
     }
 
     // Actualizar campos
     const updateData: any = { ...dto };
-    if (dto.idCompra !== undefined) {
-      updateData.compra = { idCompra: dto.idCompra };
-      delete updateData.idCompra;
-    }
+  // El DTO de compras no tiene idCompra, así que no se actualiza la compra desde aquí
     if (dto.idProducto !== undefined) {
       updateData.producto = { idProducto: dto.idProducto };
       delete updateData.idProducto;
