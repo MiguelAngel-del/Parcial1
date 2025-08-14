@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsuariosService } from '../usuarios/usuarios.service';
+import { ClientesService } from '../clientes/clientes.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -9,6 +10,7 @@ import { ConfigService } from '@nestjs/config';
 export class AuthService {
   constructor(
     private usuariosService: UsuariosService,
+    private clientesService: ClientesService,
     private jwtService: JwtService,
     private configService: ConfigService,
   ) {}
@@ -33,6 +35,9 @@ export class AuthService {
   }
 
   async login(user: any) {
+    // Buscar el cliente relacionado al usuario
+    const cliente = await this.clientesService.getClienteByUsuarioId(user.idUsuario);
+
     const accessToken = this.generateAccessToken(user);
     const refreshToken = this.generateRefreshToken(user);
 
@@ -43,7 +48,8 @@ export class AuthService {
         idUsuario: user.idUsuario,
         nombreUsuario: user.nombreUsuario,
         correoUsuario: user.correoUsuario,
-        rol: user.rol
+        rol: user.rol,
+        idCliente: cliente?.idCliente ?? null
       }
     };
   }
