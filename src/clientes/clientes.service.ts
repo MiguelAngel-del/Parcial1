@@ -37,11 +37,19 @@ export class ClientesService {
   }
 
   async getCliente(idCliente: number) {
-    const cliente = await this.clientesRepository.findOneBy({ idCliente });
+    const cliente = await this.clientesRepository.findOne({
+      where: { idCliente },
+      relations: ['municipio', 'municipio.departamento', 'usuario'],
+    });
     if (!cliente) {
       throw new NotFoundException(`Cliente con ID ${idCliente} no encontrado`);
     }
-    return cliente;
+    return {
+      ...cliente,
+      idMunicipio: cliente.municipio?.idMunicipio,
+      idDepartamento: cliente.municipio?.departamento?.idDepartamento,
+      idUsuario: cliente.usuario?.idUsuario,
+    };
   }
 
   async createCliente(dto: CreateClienteDto) {

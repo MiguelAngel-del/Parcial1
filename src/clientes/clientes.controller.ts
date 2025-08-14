@@ -14,7 +14,8 @@ import {
 import { ClientesService } from './clientes.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
-import { ApiBearerAuth,ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ClienteResponseDto } from './dto/cliente-response.dto';
+import { ApiBearerAuth,ApiBody, ApiOperation, ApiParam, ApiQuery, ApiOkResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 
@@ -62,8 +63,9 @@ export class ClientesController {
     description: 'ID del cliente a obtener',
     example: 1,
   })
-  getCliente(@Param('idCliente', ParseIntPipe) idCliente: number) {
-    return this.clientesService.getCliente(idCliente);
+  @ApiOkResponse({ type: ClienteResponseDto })
+  getCliente(@Param('idCliente', ParseIntPipe) idCliente: number): Promise<ClienteResponseDto> {
+    return this.clientesService.getCliente(idCliente) as Promise<ClienteResponseDto>;
   }
 
   @Post()
