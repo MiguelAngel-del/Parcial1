@@ -15,6 +15,10 @@ export class ClientesService {
     private readonly usuariosService: UsuariosService,
   ) {}
 
+    async getClienteByUsuarioId(idUsuario: number) {
+    return this.clientesRepository.findOne({ where: { usuario: { idUsuario } } });
+  }
+
   async getAllClientes(page: number, limit: number) {
     const queryBuilder = this.clientesRepository
       .createQueryBuilder('cliente')
