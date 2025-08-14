@@ -8,7 +8,7 @@ import { Lote } from '../lotes/entities/lote.entity';
 import { UpdateCompraDto } from './dto/update-compra.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Compra } from './entities/compra.entity';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 
 @Injectable()
 export class ComprasService {
@@ -158,5 +158,15 @@ export class ComprasService {
       throw new NotFoundException(`Compra con ID ${idCompra} no encontrada`);
     }
     return { message: `Compra con ID ${idCompra} eliminada correctamente` };
+  }
+
+  async getComprasPorFechas(fechaInicio: Date, fechaFin: Date) {
+    return await this.comprasRepository.find({
+      where: {
+        fechaCompra: Between(fechaInicio, fechaFin),
+        estado: 1,
+      },
+      relations: ['proveedor', 'usuario', 'detalles', 'detalles.producto'],
+    });
   }
 }

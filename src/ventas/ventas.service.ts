@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateVentaDto } from './dto/create-venta.dto';
 import { UpdateVentaDto } from './dto/update-venta.dto';
 import { Venta } from './entities/venta.entity';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Producto } from '../productos/entities/producto.entity';
 
@@ -119,5 +119,21 @@ export class VentasService {
       throw new NotFoundException(`Venta con ID ${idVenta} no encontrada`);
     }
     return { message: 'Venta eliminada correctamente' };
+  }
+
+  async getVentasPorFechas(fechaInicio: Date, fechaFin: Date) {
+    return await this.ventaRepository.find({
+      where: {
+        createdAt: Between(fechaInicio, fechaFin),
+        estado: 1,
+      },
+      relations: [
+        'cliente',
+        'usuario',
+        'metodoPago',
+        'detalles',
+        'detalles.producto',
+      ],
+    });
   }
 }

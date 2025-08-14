@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 import { Lote } from './entities/lote.entity';
 import { CreateLoteDto } from './dto/create-lote.dto';
 import { UpdateLoteDto } from './dto/update-lote.dto';
@@ -73,5 +73,15 @@ export class LotesService {
 
     lote.estado = false;
     return this.repo.save(lote);
+  }
+
+  async getLotesPorFechas(fechaInicio: Date, fechaFin: Date) {
+    return await this.repo.find({
+      where: {
+        fechaVencimiento: Between(fechaInicio, fechaFin),
+        estado: true,
+      },
+      relations: ['producto'],
+    });
   }
 }

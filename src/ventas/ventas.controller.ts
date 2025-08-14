@@ -11,7 +11,21 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 @Controller('ventas')
 export class VentasController {
   constructor(private readonly ventasService: VentasService) {}
-
+  
+  @Get('reporte')
+  @ApiOperation({
+    summary: 'Obtener reporte de ventas',
+    description: 'Este endpoint genera un reporte de ventas entre dos fechas'
+  })
+  @ApiQuery({ name: 'fechaInicio', type: String, required: true })
+  @ApiQuery({ name: 'fechaFin', type: String, required: true })
+  getReporteVentas(
+    @Query('fechaInicio') fechaInicio: string,
+    @Query('fechaFin') fechaFin: string,
+  ) {
+    return this.ventasService.getVentasPorFechas(new Date(fechaInicio), new Date(fechaFin));
+  }
+  
   @Get()
   @ApiOperation({
     summary: 'Obtener todas las ventas',
@@ -40,7 +54,8 @@ export class VentasController {
   }> {
     return this.ventasService.getAllVentas(page, limit);
   }
-
+  
+  
   @Get(':idVenta')
   @ApiOperation({
     summary: 'Obtener una venta por ID',
@@ -96,4 +111,5 @@ export class VentasController {
   deleteVenta(@Param('idVenta') idVenta: number) {
     return this.ventasService.deleteVenta(idVenta);
   }
+
 }

@@ -26,6 +26,17 @@ export class StockController {
   }
   constructor(private readonly svc: StockService) {}
 
+  @Get('reporte')
+  @ApiOperation({ summary: 'Obtener reporte de stock por rango de fechas' })
+  @ApiQuery({ name: 'fechaInicio', type: String, required: true })
+  @ApiQuery({ name: 'fechaFin', type: String, required: true })
+  getReporteStock(
+    @Query('fechaInicio') fechaInicio: string,
+    @Query('fechaFin') fechaFin: string,
+  ) {
+    return this.svc.getStockPorFechas(new Date(fechaInicio), new Date(fechaFin));
+  }
+  
   @Get()
   @ApiOperation({ summary: 'Obtener todos los registros de stock activos con paginación' })
   @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
@@ -78,4 +89,5 @@ export class StockController {
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.svc.delete(id);
   }
+
 }
