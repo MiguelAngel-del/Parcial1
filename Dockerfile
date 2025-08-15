@@ -1,22 +1,17 @@
-# Usamos imagen oficial de Node.jscomo base
+# Usamos imagen oficial de Node.js como base
 FROM node:20
 
 WORKDIR /app
 
-# Se verifican que dependencias se usan
+# Copiamos dependencias
 COPY package.json yarn.lock ./
-
-# Instalamos las dependencias
 RUN yarn install
 
-# Copia el resto del código
+# Copiamos el resto del código
 COPY . .
 
-# Expone el puerto a usar en este caso (3000) para backend
+# Expone el puerto
 EXPOSE 3000
 
-# Compilamos el proyecto
-RUN yarn build
-
-# Corremos el proyecto
-CMD ["yarn", "start"]
+# En lugar de compilar antes, lo hacemos en el CMD
+CMD yarn build && yarn start
