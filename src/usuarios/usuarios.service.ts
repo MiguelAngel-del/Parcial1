@@ -16,6 +16,7 @@ export class UsuariosService {
   async getAllUsuarios(page: number, limit: number) {
     const queryBuilder = this.usuariosRepository
       .createQueryBuilder('usuario')
+      .leftJoinAndSelect('usuario.rol', 'rol')
       .where('usuario.estado = :estado', { estado: true });
 
     const total = await queryBuilder.getCount();

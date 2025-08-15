@@ -78,10 +78,9 @@ export class LotesService {
   async getLotesPorFechas(fechaInicio: Date, fechaFin: Date) {
     return await this.repo.find({
       where: {
-        fechaVencimiento: Between(fechaInicio, fechaFin),
+        createdAt: Between(fechaInicio, fechaFin),
         estado: true,
       },
-      relations: ['producto'],
     });
   }
 }
