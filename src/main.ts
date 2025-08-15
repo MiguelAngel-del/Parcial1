@@ -115,3 +115,9 @@ async function bootstrap() {
 }
 
 bootstrap();
+
+module.exports = {
+  images: {
+    domains: ['grupo2-backend-k0b9.onrender.com'],
+  },
+}

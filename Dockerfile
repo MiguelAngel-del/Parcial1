@@ -16,6 +16,7 @@ RUN yarn install
 
 # Copia el resto del código
 COPY . .
+COPY uploads uploads
 
 # Expone el puerto de tu app
 EXPOSE 3000
