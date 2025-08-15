@@ -18,12 +18,13 @@ async function bootstrap() {
   // El secret es como una clave para firmar las cookies
   app.use(
     session({
-      secret: 'TU_SECRETO_ALEATORIO', // Este valor debería estar en variables de entorno, asi se quda de momento
-      resave: false, // no guarda la sesión si no ha cambiado
-      saveUninitialized: false, // no guarda sesiones vacías
+      secret: process.env.SESSION_SECRET || 'TU_SECRETO_ALEATORIO',
+      resave: false,
+      saveUninitialized: false,
       cookie: {
-        httpOnly: true, // Para que no se pueda acceder a la cookie desde el frontend
-        maxAge: 1000 * 60 * 60, // La sesión dura 1 hora
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 1000 * 60 * 60,
       },
     }),
   );
@@ -57,7 +58,10 @@ async function bootstrap() {
 
   // configuracion CORS origin: true permite cualquier origen credentials: true permite enviar cookies y headers de autenticación
   app.enableCors({
-    origin: true,
+    origin: [
+      'http://localhost:3000',
+      'https://grupo2-frontend.onrender.com',
+    ],
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Authorization, X-Requested-With',
