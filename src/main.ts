@@ -7,6 +7,7 @@ import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import { AuthService } from './auth/auth.service';
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -56,7 +57,7 @@ async function bootstrap() {
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }),
   );
 
-  // configuracion CORS origin: true permite cualquier origen credentials: true permite enviar cookies y headers de autenticación
+  // configuracion CORS: solo permite los orígenes válidos
   app.enableCors({
     origin: [
       'http://localhost:3000',
@@ -67,6 +68,8 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Authorization, X-Requested-With',
   });
 
+  // Servir archivos estáticos en /uploads
+  app.use('/uploads', require('express').static(join(__dirname, '..', 'uploads')));
   // Uso ConfigService para obtener el puerto desde .env
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT') || 3001;
@@ -105,7 +108,7 @@ async function bootstrap() {
     next();
   });
 
-  await app.listen(port, '0.0.0.0', () => {
+  await app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
     console.log(`Swagger UI: http://localhost:${port}/api`);
   });
