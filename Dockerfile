@@ -13,7 +13,7 @@ RUN yarn install
 COPY . .
 
 # Expone el puerto a usar en este caso (3000) para backend
-EXPOSE 3000
+EXPOSE 3001
 
 # Compilamos el proyecto
 RUN yarn build
