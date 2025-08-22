@@ -1,14 +1,16 @@
 # Gestión inventarios e-commerce
 
-Este es el servicio de gestión de inventario para e-commerce, desarrollado en NestJs con NodeJS. Proporciona endpoints REST.
+Recursoso humanos
+creacion de empleados (el correo es unico si se intenta usar el mismo no dejara crear al empleados)
+creacion de proyectos (creacionde proyectos)
+Asignacion de empleados a proyectos mediante el id
+adjunto base de datos en el proyecto (al correrlo el proyecto crea las tablas)
 
 ---
 
 ## Autores
 
-- **Miguel García** – backend developer
-- **Javier García** – backend developer
-- **Samuel Quijivix** – backend developer
+- **Miguel García**
 
 ---
 
